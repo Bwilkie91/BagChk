@@ -866,8 +866,14 @@
         }));
 
         // Carousel
+         // Carousel: show first image immediately, then rotate
         const items = $$('.carousel-item');
         let idx = 0;
+        // Immediately show the first image, then rotate as usual
+        items.forEach((item, i) => {
+            item.classList.toggle('active', i === 0);
+            item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
+        });
         const rotateCarousel = () => {
             items[idx].classList.remove('active');
             items[idx].setAttribute('aria-hidden', 'true');
@@ -876,6 +882,7 @@
             items[idx].setAttribute('aria-hidden', 'false');
         };
         setInterval(rotateCarousel, 5000);
+       
         items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
 
         // Map Setup
