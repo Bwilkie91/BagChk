@@ -399,41 +399,38 @@
     </style>
 </head>
 <body>
-<nav class="bg-white shadow">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
-      
-      <!-- Logo -->
-      <a href="index.html" class="flex items-center gap-2 logo">
-        <div class="logo-icon">B</div>
-        <span class="logo-text">bag<span>chk</span></span>
-      </a>
+<nav>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <a href="index.html" aria-label="Bagchk Home" class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" class="h-8 sm:h-9 lg:h-10 max-w-[130px]" aria-hidden="true" role="img">
+                    <text x="0" y="28" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#0F172A">Bag</text>
+                    <text x="65" y="28" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#3B82F6">chk</text>
+                </svg>
+            </a>
 
-      <!-- Navigation Links -->
-      <div class="hidden md:flex items-center gap-4 sm:gap-5 lg:gap-6 nav-links">
-        <a href="index.html" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
-        <a href="index.html" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
-        <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
-        <a href="#book" class="btn btn-primary p-2 sm:px-4 rounded">Book Now</a>
-      </div>
+            <div class="flex items-center gap-3">
+                <button class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 5v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </button>
+                <button class="hamburger" aria-label="Toggle navigation menu" role="button">
+                    <div></div><div></div><div></div>
+                </button>
+            </div>
 
-      <!-- Controls: Theme toggle & Hamburger -->
-      <div class="flex items-center gap-3">
-        <button class="theme-toggle" aria-label="Toggle dark mode">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M12 3v1m0 5v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-        </button>
-        <button class="hamburger md:hidden" aria-label="Toggle navigation menu" role="button">
-          <div class="w-5 h-0.5 bg-gray-800 mb-1"></div>
-          <div class="w-5 h-0.5 bg-gray-800 mb-1"></div>
-          <div class="w-5 h-0.5 bg-gray-800"></div>
-        </button>
-      </div>
+            <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
+                <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
+                <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
+                <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
+                <a href="#book" class="btn btn-primary p-2 sm:px-4 rounded">Book Now</a>
+            </div>
+        </div>
     </div>
-  </div>
 </nav>
+
 
  <section id="book" class="booking-section">
         <div class="booking-container">
