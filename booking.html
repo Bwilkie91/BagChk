@@ -198,6 +198,20 @@
                 font-size: 0.875rem;
             }
         }
+        .carousel-item {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.carousel-item.active {
+    opacity: 1;
+    position: relative;
+}
+
 
         /* Desktop-specific styles */
         @media (min-width: 641px) {
