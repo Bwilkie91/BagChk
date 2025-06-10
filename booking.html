@@ -896,40 +896,18 @@
                 }
             }
         }));
-
-        // // Carousel
-        // const items = $$('.carousel-item');
-        // let idx = 0;
-        // const rotateCarousel = () => {
-        //     items[idx].classList.remove('active');
-        //     items[idx].setAttribute('aria-hidden', 'true');
-        //     idx = (idx + 1) % items.length;
-        //     items[idx].classList.add('active');
-        //     items[idx].setAttribute('aria-hidden', 'false');
-        // };
-        // setInterval(rotateCarousel, 5000);
-        // items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
-
-    
-setInterval(rotateCarousel, 5000);
-
- // Carousel
+/ Carousel
         const items = $$('.carousel-item');
         let idx = 0;
         const rotateCarousel = () => {
             items[idx].classList.remove('active');
-            items[idx].setAttribute('aria-selected', 'false');
+            items[idx].setAttribute('aria-hidden', 'true');
             idx = (idx + 1) % items.length;
             items[idx].classList.add('active');
-            items[idx].setAttribute('aria-selected', 'true');
-        }
-        items[0].classList.add('active'); // Ensure first item is visible immediately
-        items[0].setAttribute('aria-selected', 'true');
-        items.forEach((item, index) => {
-            if (index !== 0) item.setAttribute('aria-hidden', 'true');
-            else item.setAttribute('aria-hidden', 'false');
-        });
-        setTimeout(() => setInterval(() => rotateCarousel(), 5000), 5000); // Delay first rotation
+            items[idx].setAttribute('aria-hidden', 'false');
+        };
+        setInterval(rotateCarousel, 5000);
+        items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
 
         // Map Setup
         const map = L.map('map', { zoomControl: true, scrollWheelZoom: false, zoom: innerWidth <= 640 ? 10 : 13 })
@@ -1414,35 +1392,5 @@ setInterval(rotateCarousel, 5000);
             }
         });
     </script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("booking-form");
-    const bagCountInput = document.getElementById("bag-count");
-    const bagDescriptionInput = document.getElementById("bag-description");
-    const summaryContent = document.getElementById("summary-content");
-
-    function updateSummary() {
-        const bagCount = bagCountInput.value;
-        const bagDescription = bagDescriptionInput.value.trim();
-
-        let summary = "<ul class='list-disc pl-4'>";
-        if (bagCount) {
-            summary += `<li><strong>Bags:</strong> ${bagCount}</li>`;
-        }
-        if (bagDescription) {
-            summary += `<li><strong>Description:</strong> ${bagDescription}</li>`;
-        }
-        summary += "</ul>";
-
-        summaryContent.innerHTML = summary;
-    }
-
-    bagCountInput.addEventListener("input", updateSummary);
-    bagDescriptionInput.addEventListener("input", updateSummary);
-});
-</script>
-
-
-
 </body>
 </html>
