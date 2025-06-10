@@ -602,21 +602,100 @@
             </div>
         </div>
     </section>
+<style>
+/* Additional style for appealing QR summary */
+.qr-summary-box {
+    max-width: 350px;
+    font-size: 1.08rem;
+    background: var(--background-light,#f9fafb);
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.13);
+    margin-bottom: 1.5rem;
+    border: 1.5px solid #e0e7ef;
+    padding: 1.5rem 1rem;
+    text-align: center;
+}
+.qr-summary-box .big {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary,#2563eb);
+    margin-bottom: 0.45em;
+}
+.qr-summary-box .item {
+    margin: 0.15em 0;
+    font-weight: 500;
+}
+.qr-summary-box .label {
+    color: var(--text-light,#6b7280);
+    font-weight: 400;
+}
+@media (max-width: 640px) {
+    .qr-summary-box { padding: 1rem 0.6rem; font-size: 1rem; }
+}
+</style>
+<script>
+// --- Enhance QR summary in modal ---
+function formatDateTime(dt) {
+    if (!dt) return '';
+    return new Date(dt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/Chicago' });
+}
+function getBookingSummaryHTML(inputs) {
+    return `
+        <div class="big">Bagchk Booking</div>
+        <div class="item"><span class="label">Name:</span> ${inputs.name.value ? sanitizeInput(inputs.name.value) : '<em>Not provided</em>'}</div>
+        <div class="item"><span class="label">Location:</span> ${inputs.location.value ? sanitizeInput(inputs.location.value) : '<em>Not selected</em>'}</div>
+        <div class="item"><span class="label">Bags:</span> ${inputs.bagCount.value || 0} (${inputs.bagType.value ? sanitizeInput(inputs.bagType.value) : 'Not selected'})</div>
+        <div class="item"><span class="label">Drop-off:</span> ${formatDateTime(inputs.startDate.value)}</div>
+        <div class="item"><span class="label">Pick-up:</span> ${formatDateTime(inputs.endDate.value)}</div>
+        ${inputs.insurance.checked ? `<div class="item"><span class="label">Insurance:</span> <span style="color:#10b981;font-weight:600">✔ Included</span></div>` : ''}
+        ${inputs.specialInstructions.value ? `<div class="item"><span class="label">Special:</span> ${sanitizeInput(inputs.specialInstructions.value)}</div>` : ''}
+        <div class="item" style="margin-top:0.5em;color:#4b5563;font-size:.98em;">Show this summary at storage location</div>
+    `;
+}
 
+// Patch the code that opens the confirmation modal to use the new summary
+function fillQRSummary() {
+    const qrSummary = document.getElementById('qr-summary');
+    if (qrSummary) {
+        qrSummary.innerHTML = getBookingSummaryHTML(inputs);
+    }
+}
+
+// You likely have code like this when booking is confirmed:
+function showConfirmationModal() {
+    fillQRSummary();
+    // ...other modal open logic (likely already present)...
+}
+// If you have an event or function that shows the modal, ensure `fillQRSummary()` is called before displaying.
+
+// If you use a modal show code elsewhere, just add `fillQRSummary();` before display logic.
+
+// Optionally, you can call fillQRSummary() wherever you update or show the modal.
+</script>
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
-            <h2 class="font-semibold mb-4">🎉 Booking Confirmed!</h2>
-            <div id="modal-details" class="mb-4"></div>
-            <p class="text-[var(--text-light)] mb-4">Show this QR code or a valid ID to drop off and pick up your luggage.</p>
-            <div class="qr-container">
-                <div id="qrcode" role="img" aria-label="QR code containing booking details"></div>
-                <button id="download-qr" class="btn btn-primary">Download QR Code</button>
-                <button id="add-to-calendar" class="btn btn-primary">Add to Calendar</button>
+        <h2 class="font-semibold mb-4">🎉 Booking Confirmed!</h2>
+        <!-- New: Appealing summary box -->
+        <div id="qr-summary" class="qr-summary-box mb-4" style="display: flex; flex-direction: column; align-items: center; background: var(--background-light,#f9fafb); border-radius: 18px; box-shadow: 0 2px 12px rgba(37,99,235,0.12); padding: 1.5rem 1rem; margin-bottom: 1.5rem;">
+            <!-- Populated by JS -->
+        </div>
+        <p class="text-[var(--text-light)] mb-4">Show this QR code or a valid ID to drop off and pick up your luggage.</p>
+        <div class="qr-container" style="align-items: center;">
+            <div id="qrcode" role="img" aria-label="QR code containing booking details"
+                 style="background: white; border-radius: 16px; box-shadow: 0 1px 8px rgba(37,99,235,0.10); padding: 14px; width: 220px; height: 220px; display: flex; align-items: center; justify-content: center;">
             </div>
-            <div class="flex justify-end gap-4 mt-4">
-                <button id="modal-close" class="btn btn-primary">Done</button>
-            </div>
-            <p class="text-[var(--text-light)] mt-4">Want storage tips and discounts? <a href="#newsletter" class="text-[var(--primary)] hover:underline">Join our newsletter!</a></p>
+            <button id="download-qr" class="btn btn-primary">Download QR Code</button>
+            <button id="add-to-calendar" class="btn btn-primary">Add to Calendar</button>
+        </div>
+        <div class="flex justify-end gap-4 mt-4">
+            <button id="modal-close" class="btn btn-primary">Done</button>
+        </div>
+        <p class="text-[var(--text-light)] mt-4">Want storage tips and discounts? <a href="#newsletter" class="text-[var(--primary)] hover:underline">Join our newsletter!</a></p>
+    </div>
+</div>
+
+            
+
         </div>
     </div>
 
