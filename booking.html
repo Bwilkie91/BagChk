@@ -536,10 +536,7 @@
                                 <label for="bag-count">How Many Bags?</label>
                                 <input type="number" id="bag-count" min="1" max="10" class="w-full" placeholder="e.g., 2" aria-describedby="bag-count-error bag-count-hint" required>
                                 <span class="helper-text" id="bag-count-hint">Enter the total number of bags (max 10)</span>
-                                <svg class="valid-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                </svg>
-                                <div class="form-group required">
+                                   <div class="form-group required">
   <label for="bag-description">Describe Your Bags</label>
   <textarea
     id="bag-description"
@@ -556,7 +553,10 @@
   </svg>
   <div id="bag-description-error" class="error-message" role="alert"></div>
 </div>
-<script>
+                                <svg class="valid-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                             
     <script>
 document.addEventListener("DOMContentLoaded", () => {
     const bagCountInput = document.getElementById("bag-count");
