@@ -12,20 +12,6 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-
-        .carousel-item {
-    transition: opacity 0.5s ease-in-out;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-.carousel-item.active {
-    opacity: 1;
-    position: relative;
-}
         /* General enhancements */
         :root {
             --primary: #2563eb;
@@ -118,13 +104,13 @@
                 gap: 1.5rem;
             }
             .carousel-container {
-                min-height: 320px;
+                min-height: 120px;
                 max-height: 140px;
             }
             .carousel-item {
                 background-size: cover;
                 background-position: center;
-                height: 300px;
+                height: 120px;
             }
             .progress-bar {
                 flex-direction: column;
@@ -198,20 +184,6 @@
                 font-size: 0.875rem;
             }
         }
-        .carousel-item {
-    transition: opacity 0.5s ease-in-out;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-.carousel-item.active {
-    opacity: 1;
-    position: relative;
-}
-
 
         /* Desktop-specific styles */
         @media (min-width: 641px) {
@@ -430,7 +402,7 @@
     <nav>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="/BagChk2.0/index.html" aria-label="Bagchk Home"><img src="/BagChk2.0/images/logo.jpg" alt="Bagchk Logo" class="h-8 sm:h-9 lg:h-10 max-w-[130px] object-contain" loading="lazy"></a>
+                <a href="index.html" aria-label="Bagchk Home"><img src="/Bagchk2/images/logo.jpg" alt="Bagchk Logo" class="h-8 sm:h-9 lg:h-10 max-w-[130px] object-contain" loading="lazy"></a>
                 <div class="flex items-center gap-3">
                     <button class="theme-toggle" aria-label="Toggle dark mode">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -440,9 +412,9 @@
                     <button class="hamburger" aria-label="Toggle navigation menu" role="button"><div></div><div></div><div></div></button>
                 </div>
                 <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
-                    <a href="/BagChk2.0/index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
-                    <a href="/BagChk2.0/index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
-                    <a href="/BagChk2.0/index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
+                    <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
+                    <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
+                    <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
                     <a href="#book" class="btn btn-primary p-2 sm:px-4 rounded">Book Now</a>
                 </div>
             </div>
@@ -452,15 +424,11 @@
         <div class="booking-container">
             <div class="carousel-container" role="region" aria-label="Promotional images carousel">
                 <div class="carousel-item active" style=" Easter Egg! You're a curious one, aren't you? 🕵️‍♂️ Here's a fun fact: Chicago's nickname 'The Windy City' isn't just about the weather—it's also a nod to its long-winded politicians! Keep exploring, and maybe you'll find more hidden gems! 😎"></div>
-                <div class="carousel-item" style="background-image: url('/BagChk2.0/images/sports.jpg')"></div>
-                <div class="carousel-item" style="background-image: url('/BagChk2.0/images/mpark.jpg')"></div>
-                <div class="carousel-item" style="background-image: url('/BagChk2.0/images/npier.jpg')"></div>
-                <div class="carousel-item" style="background-image: url('/BagChk2.0/images/travel.jpg')"></div>
-
-
+                <div class="carousel-item" style="background-image: url('/Bagchk2/images/sports.jpg')"></div>
+                <div class="carousel-item" style="background-image: url('/Bagchk2/images/mpark.jpg')"></div>
             </div>
  
-                     <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
+            <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
             <div id="distance-info" class="text-center text-[var(--text-light)] mb-6" aria-live="polite"></div>
             <div class="trust-section">
                 <svg class="w-6 h-6 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -896,7 +864,8 @@
                 }
             }
         }));
-/ Carousel
+
+        // Carousel
         const items = $$('.carousel-item');
         let idx = 0;
         const rotateCarousel = () => {
