@@ -12,6 +12,20 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
+
+        .carousel-item {
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.carousel-item.active {
+    opacity: 1;
+    position: relative;
+}
         /* General enhancements */
         :root {
             --primary: #2563eb;
