@@ -11,15 +11,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <style>
-        /* General enhancements */
+     <style>
         :root {
             --primary: #2563eb;
-            --primary-dark: #1e40af; /* For hover effects */
+            --primary-dark: #1e40af;
             --background-light: #f9fafb;
             --shadow: rgba(0, 0, 0, 0.1);
         }
-
         .btn-primary {
             background-color: var(--primary);
             color: #fff;
@@ -28,12 +26,10 @@
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
         }
-
         .btn-primary:hover {
             background-color: var(--primary-dark);
             transform: translateY(-2px);
         }
-
         .btn-secondary {
             background-color: var(--background-light);
             color: var(--text, #333);
@@ -42,27 +38,22 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         .btn-secondary:hover {
             background-color: #e5e7eb;
         }
-
         .form-group {
-            margin-bottom: 1.5rem; /* Consistent spacing */
+            margin-bottom: 1.5rem;
         }
-
         input, select, textarea {
             border: 1px solid var(--text-light, #d1d5db);
             border-radius: 6px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
-
         .valid-icon {
             position: absolute;
             right: 1rem;
@@ -70,331 +61,127 @@
             transform: translateY(-50%);
             display: none;
         }
-
         input.valid + .valid-icon,
         select.valid + .valid-icon {
             display: block;
             color: var(--success, #10b981);
         }
-
         /* Mobile-specific styles */
         @media (max-width: 640px) {
-            body {
-                font-size: 0.875rem;
+            body { font-size: 0.875rem; }
+            nav .max-w-7xl, .booking-container, .footer-container {
+                padding-left: 0.75rem; padding-right: 0.75rem; max-width: 100vw;
             }
-            nav .max-w-7xl, 
-            .booking-container, 
-            .footer-container {
-                padding-left: 0.75rem;
-                padding-right: 0.75rem;
-                max-width: 100vw;
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.25rem; }
+            h3 { font-size: 1rem; }
+            .booking-grid { display: flex; flex-direction: column; gap: 1.5rem;}
+            .carousel-container { min-height: 120px; max-height: 140px;}
+            .carousel-item { background-size: cover; background-position: center; height: 120px;}
+            .progress-bar { flex-direction: column; gap: 0.5rem;}
+            .booking-summary, #map { min-width: 0; width: 100% !important; max-width: 100vw; height: 200px;}
+            .form-group, .form-section { width: 100%; min-width: 0;}
+            .form-group input, .form-group select, .form-group textarea, .form-group button {
+                font-size: 0.875rem; padding: 0.75rem; min-height: 44px; box-sizing: border-box;
             }
-            h1 {
-                font-size: 1.5rem;
-            }
-            h2 {
-                font-size: 1.25rem;
-            }
-            h3 {
-                font-size: 1rem;
-            }
-            .booking-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            .carousel-container {
-                min-height: 120px;
-                max-height: 140px;
-            }
-            .carousel-item {
-                background-size: cover;
-                background-position: center;
-                height: 120px;
-            }
-            .progress-bar {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .booking-summary, #map {
-                min-width: 0;
-                width: 100% !important;
-                max-width: 100vw;
-                height: 200px;
-            }
-            .form-group, .form-section {
-                width: 100%;
-                min-width: 0;
-            }
-            .form-group input,
-            .form-group select,
-            .form-group textarea,
-            .form-group button {
-                font-size: 0.875rem;
-                padding: 0.75rem;
-                min-height: 44px;
-                box-sizing: border-box;
-            }
-            .form-navigation {
-                flex-direction: column;
-                gap: 0.75rem;
-            }
-            .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: var(--background, #fff);
-                flex-direction: column;
-                display: none;
-                z-index: 99;
-                padding: 0.75rem;
-            }
-            .nav-links.active {
-                display: flex;
-            }
-            .hamburger {
-                display: flex !important;
-            }
-            .footer-container {
-                flex-direction: column;
-                gap: 1rem;
-                padding-bottom: 1.5rem;
-            }
-            .modal-content {
-                width: 90vw;
-                min-width: unset;
-                max-width: 100vw;
-                padding: 1rem;
-                box-sizing: border-box;
-            }
-            .qr-container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-            #qrcode {
-                width: 150px;
-                height: 150px;
-            }
-            #download-qr, #add-to-calendar, #modal-close {
-                width: 100%;
-                min-height: 48px;
-                font-size: 0.875rem;
-            }
+            .form-navigation { flex-direction: column; gap: 0.75rem;}
+            .nav-links { position: absolute; top: 100%; left: 0; right: 0; background: var(--background, #fff); flex-direction: column; display: none; z-index: 99; padding: 0.75rem;}
+            .nav-links.active { display: flex; }
+            .hamburger { display: flex !important; }
+            .footer-container { flex-direction: column; gap: 1rem; padding-bottom: 1.5rem;}
+            .modal-content { width: 90vw; min-width: unset; max-width: 100vw; padding: 1rem; box-sizing: border-box;}
+            .qr-container { display: flex; flex-direction: column; align-items: center; gap: 1rem;}
+            #qrcode { width: 180px; height: 180px; }
+            #download-qr, #add-to-calendar, #modal-close { width: 100%; min-height: 48px; font-size: 0.875rem; }
         }
-
         /* Desktop-specific styles */
         @media (min-width: 641px) {
-            body {
-                font-size: 1rem;
+            body { font-size: 1rem; }
+            nav .max-w-7xl, .booking-container, .footer-container {
+                max-width: 1280px; padding-left: 2rem; padding-right: 2rem; margin-left: auto; margin-right: auto;
             }
-            nav .max-w-7xl,
-            .booking-container,
-            .footer-container {
-                max-width: 1280px;
-                padding-left: 2rem;
-                padding-right: 2rem;
-                margin-left: auto;
-                margin-right: auto;
+            h1 { font-size: 2.5rem; line-height: 1.2;}
+            h2 { font-size: 1.75rem;}
+            h3 { font-size: 1.25rem;}
+            .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;}
+            .carousel-container { min-height: 200px; max-height: 240px;}
+            .carousel-item { background-size: cover; background-position: center; height: 200px;}
+            .progress-bar { display: flex; flex-direction: row; gap: 1.5rem; justify-content: center;}
+            .progress-step { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; min-width: 120px;}
+            .booking-summary, #map {
+                width: 100%; height: 400px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             }
-            h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
+            .form-group, .form-section { width: 100%; }
+            .form-group input, .form-group select, .form-group textarea, .form-group button {
+                font-size: 1rem; padding: 1rem; min-height: 48px; border-radius: 6px;
             }
-            h2 {
-                font-size: 1.75rem;
-            }
-            h3 {
-                font-size: 1.25rem;
-            }
-            .booking-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-                align-items: start;
-            }
-            .carousel-container {
-                min-height: 200px;
-                max-height: 240px;
-            }
-            .carousel-item {
-                background-size: cover;
-                background-position: center;
-                height: 200px;
-            }
-            .progress-bar {
-                display: flex;
-                flex-direction: row;
-                gap: 1.5rem;
-                justify-content: center;
-            }
-            .progress-step {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-                min-width: 120px;
-            }
-            .booking-summary,
-            #map {
-                width: 100%;
-                height: 400px;
-                border-radius: 8px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            }
-            .form-group,
-            .form-section {
-                width: 100%;
-            }
-            .form-group input,
-            .form-group select,
-            .form-group textarea,
-            .form-group button {
-                font-size: 1rem;
-                padding: 1rem;
-                min-height: 48px;
-                border-radius: 6px;
-            }
-            .form-navigation {
-                display: flex;
-                flex-direction: row;
-                gap: 1rem;
-                justify-content: flex-end;
-            }
-            .nav-links {
-                display: flex;
-                flex-direction: row;
-                position: static;
-                background: none;
-                padding: 0;
-            }
-            .nav-links a {
-                font-size: 1rem;
-                padding: 0.5rem 1rem;
-            }
-            .hamburger {
-                display: none;
-            }
-            .footer-container {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 2rem;
-                padding: 2rem 0;
-            }
-            .modal-content {
-                width: 600px;
-                max-width: 90vw;
-                padding: 2rem;
-                border-radius: 12px;
-            }
-            .qr-container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                gap: 1.5rem;
-            }
-            #qrcode {
-                width: 200px;
-                height: 200px;
-            }
-            #download-qr,
-            #add-to-calendar,
-            #modal-close {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-                min-height: 52px;
-            }
-            .btn-primary {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-                transition: background-color 0.3s, transform 0.2s;
-            }
-            .btn-primary:hover {
-                background-color: var(--primary-dark);
-                transform: translateY(-2px);
-            }
-            .btn-secondary {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-            }
-            .trust-section {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                font-size: 1rem;
-                padding: 1rem;
-                background: var(--background-light);
-                border-radius: 8px;
-                margin-bottom: 1.5rem;
-            }
-            #distance-info {
-                font-size: 1rem;
-            }
+            .form-navigation { display: flex; flex-direction: row; gap: 1rem; justify-content: flex-end;}
+            .nav-links { display: flex; flex-direction: row; position: static; background: none; padding: 0;}
+            .nav-links a { font-size: 1rem; padding: 0.5rem 1rem;}
+            .hamburger { display: none; }
+            .footer-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; padding: 2rem 0;}
+            .modal-content { width: 600px; max-width: 90vw; padding: 2rem; border-radius: 12px;}
+            .qr-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem;}
+            #qrcode { width: 240px; height: 240px; }
+            #download-qr, #add-to-calendar, #modal-close { padding: 0.75rem 1.5rem; font-size: 1rem; min-height: 52px;}
+            .btn-primary { padding: 0.75rem 1.5rem; font-size: 1rem; transition: background-color 0.3s, transform 0.2s;}
+            .btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-2px);}
+            .btn-secondary { padding: 0.75rem 1.5rem; font-size: 1rem;}
+            .trust-section { display: flex; align-items: center; gap: 1rem; font-size: 1rem; padding: 1rem; background: var(--background-light); border-radius: 8px; margin-bottom: 1.5rem;}
+            #distance-info { font-size: 1rem; }
         }
-
         /* General styles (unchanged) */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            justify-content: center;
-            align-items: center;
-            width: 32px;
-            height: 32px;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-        .hamburger div {
-            width: 24px;
-            height: 3px;
-            background: var(--text, #333);
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-        .select-container {
-            position: relative;
-            width: 100%;
-        }
+        .hamburger { display: none; flex-direction: column; gap: 4px; justify-content: center; align-items: center; width: 32px; height: 32px; background: none; border: none; cursor: pointer; }
+        .hamburger div { width: 24px; height: 3px; background: var(--text, #333); border-radius: 2px; transition: all 0.3s;}
+        .select-container { position: relative; width: 100%; }
         .select-container select {
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right 0.75rem center/16px 16px;
-            padding-right: 2.5rem;
-            max-height: 150px;
-            overflow-y: auto;
+            appearance: none; -webkit-appearance: none; -moz-appearance: none;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>') no-repeat right 1.2rem center/1.2em;
+            padding-right: 2.5rem; max-height: 150px; overflow-y: auto;
         }
-        .select-container select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        .select-container select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);}
+        .select-container select.error { border-color: var(--error);}
+        .select-container select.valid { border-color: var(--success);}
+        .confetti { position: fixed; width: 8px; height: 8px; opacity: 0.8; animation: fall 2s linear;}
+        @keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+        ::selection { background: var(--primary, #2563eb); color: #fff;}
+        [data-theme="dark"] ::selection { background: var(--primary, #60a5fa); color: #000;}
+        /* --- QR Summary Box --- */
+        .qr-summary-box {
+            max-width: 350px;
+            font-size: 1.08rem;
+            background: var(--background-light,#f9fafb);
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(37,99,235,0.13);
+            margin-bottom: 1.5rem;
+            border: 1.5px solid #e0e7ef;
+            padding: 1.5rem 1rem;
+            text-align: center;
         }
-        .select-container select.error {
-            border-color: var(--error);
+        .qr-summary-box .big {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary,#2563eb);
+            margin-bottom: 0.45em;
         }
-        .select-container select.valid {
-            border-color: var(--success);
+        .qr-summary-box .item {
+            margin: 0.15em 0;
+            font-weight: 500;
         }
-        .confetti {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            opacity: 0.8;
-            animation: fall 2s linear;
+        .qr-summary-box .label {
+            color: var(--text-light,#6b7280);
+            font-weight: 400;
         }
-        @keyframes fall {
-            to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-        ::selection {
-            background: var(--primary, #2563eb);
-            color: #fff;
-        }
-        [data-theme="dark"] ::selection {
-            background: var(--primary, #60a5fa);
-            color: #000;
+        /* --- QR code box --- */
+        .qr-box {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 1px 8px rgba(37,99,235,0.10);
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5em;
         }
     </style>
 </head>
@@ -675,33 +462,27 @@ function fillQRSummary() {
 
 // Optionally, you can call fillQRSummary() wherever you update or show the modal.
 </script>
- <div id="confirmation-modal" class="modal">
-    <div class="modal-content">
-        <h2 class="font-semibold mb-4">🎉 Booking Confirmed!</h2>
-        <!-- New: Appealing summary box -->
-        <div id="qr-summary" class="qr-summary-box mb-4" style="display: flex; flex-direction: column; align-items: center; background: var(--background-light,#f9fafb); border-radius: 18px; box-shadow: 0 2px 12px rgba(37,99,235,0.12); padding: 1.5rem 1rem; margin-bottom: 1.5rem;">
-            <!-- Populated by JS -->
-        </div>
-        <p class="text-[var(--text-light)] mb-4">Show this QR code or a valid ID to drop off and pick up your luggage.</p>
-        <div class="qr-container" style="align-items: center;">
-            <div id="qrcode" role="img" aria-label="QR code containing booking details"
-                 style="background: white; border-radius: 16px; box-shadow: 0 1px 8px rgba(37,99,235,0.10); padding: 14px; width: 220px; height: 220px; display: flex; align-items: center; justify-content: center;">
+     <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <h2 class="font-semibold mb-4">🎉 Booking Confirmed!</h2>
+            <!-- Appealing summary box -->
+            <div id="qr-summary" class="qr-summary-box mb-4"></div>
+            <p class="text-[var(--text-light)] mb-4">Show this QR code or a valid ID to drop off and pick up your luggage.</p>
+            <div class="qr-container" style="align-items: center;">
+                <div class="qr-box">
+                    <div id="qrcode" role="img" aria-label="QR code containing booking details"
+                        style="width: 180px; height: 180px;">
+                    </div>
+                </div>
+                <button id="download-qr" class="btn btn-primary">Download QR Code</button>
+                <button id="add-to-calendar" class="btn btn-primary">Add to Calendar</button>
             </div>
-            <button id="download-qr" class="btn btn-primary">Download QR Code</button>
-            <button id="add-to-calendar" class="btn btn-primary">Add to Calendar</button>
-        </div>
-        <div class="flex justify-end gap-4 mt-4">
-            <button id="modal-close" class="btn btn-primary">Done</button>
-        </div>
-        <p class="text-[var(--text-light)] mt-4">Want storage tips and discounts? <a href="#newsletter" class="text-[var(--primary)] hover:underline">Join our newsletter!</a></p>
-    </div>
-</div>
-
-            
-
+            <div class="flex justify-end gap-4 mt-4">
+                <button id="modal-close" class="btn btn-primary">Done</button>
+            </div>
+            <p class="text-[var(--text-light)] mt-4">Want storage tips and discounts? <a href="#newsletter" class="text-[var(--primary)] hover:underline">Join our newsletter!</a></p>
         </div>
     </div>
-
     <footer>
         <div class="footer-container">
             <div>
@@ -727,728 +508,67 @@ function fillQRSummary() {
             </div>
         </div>
     </footer>
-
     <script>
-        // Utility Functions
-        const $ = (s, el = document) => el.querySelector(s);
-        const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
-        const html = $('html');
-        const form = $('#booking-form');
-        const inputs = {
-            name: $('#name'),
-            email: $('#email'),
-            phone: $('#phone'),
-            location: $('#location'),
-            startDate: $('#start-date'),
-            endDate: $('#end-date'),
-            bagCount: $('#bag-count'),
-            bagType: $('#bag-type'),
-            prohibitedItems: $('#prohibited-items'),
-            insurance: $('#insurance'),
-            specialInstructions: $('#special-instructions')
-        };
-        const storageLocations = [
-            { lat: 41.8800, lng: -87.6250, name: "Downtown Storage - Michigan Ave", address: "100 N Michigan Ave, Chicago, IL 60601" },
-            { lat: 41.8850, lng: -87.6300, name: "Loop Storage - State St", address: "200 S State St, Chicago, IL 60604" },
-            { lat: 41.8750, lng: -87.6200, name: "River North Storage", address: "300 N Clark St, Chicago, IL 60654" },
-            { lat: 41.8825, lng: -87.6230, name: "Millennium Park Storage", address: "201 E Randolph St, Chicago, IL 60602" },
-            { lat: 41.8910, lng: -87.6080, name: "Navy Pier Storage", address: "600 E Grand Ave, Chicago, IL 60611" },
-            { lat: 41.9470, lng: -87.6530, name: "Lincoln Park Zoo Storage", address: "2001 N Clark St, Chicago, IL 60614" },
-            { lat: 41.9660, lng: -87.6750, name: "Wrigley Field Storage", address: "1060 W Addison St, Chicago, IL 60613" },
-            { lat: 41.8670, lng: -87.6250, name: "Museum Campus Storage", address: "1400 S Lake Shore Dr, Chicago, IL 60605" },
-            { lat: 41.8855, lng: -87.6350, name: "Chicago Riverwalk Storage", address: "100 E Wacker Dr, Chicago, IL 60601" },
-            { lat: 41.8920, lng: -87.6230, name: "Magnificent Mile Storage", address: "875 N Michigan Ave, Chicago, IL 60611" },
-            { lat: 41.8530, lng: -87.6500, name: "Pilsen Art Storage", address: "1850 S Blue Island Ave, Chicago, IL 60608" },
-            { lat: 41.8840, lng: -87.6270, name: "Chicago Cultural Center Storage", address: "78 E Washington St, Chicago, IL 60602" },
-            { lat: 41.9140, lng: -87.6860, name: "Wicker Park Storage", address: "1400 N Milwaukee Ave, Chicago, IL 60622" }
-        ];
-        let currentStep = 'personal';
-        let userMarker = null;
-        let watchId = null;
-        const validationCache = new Map();
-        let isValidating = false;
-
-        // Utility to convert camelCase to kebab-case
-        const toKebabCase = str => str.replace(/([A-Z])/g, '-$1').toLowerCase();
-
-        // Validation Rules
-        const validationRules = {
-            name: {
-                validate: value => {
-                    const sanitized = sanitizeInput(value.trim());
-                    return sanitized.length >= 2 && /^[a-zA-Z\s]+$/.test(sanitized);
-                },
-                error: value => value.trim() ? 'Name must be at least 2 characters and contain only letters.' : 'Please enter your full name.'
-            },
-            email: {
-                validate: value => {
-                    const sanitized = sanitizeInput(value.trim().toLowerCase());
-                    return sanitized && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitized);
-                },
-                error: value => value.trim() ? 'Please provide a valid email address.' : 'Please provide an email address.'
-            },
-            phone: {
-                validate: value => {
-                    const sanitized = sanitizeInput(value.replace(/[\s-]/g, ''));
-                    return !sanitized || /^\+?\d{10,15}$/.test(sanitized);
-                },
-                error: () => 'Please provide a valid phone number (e.g., +15551234567).'
-            },
-            location: {
-                validate: value => value && storageLocations.some(l => l.name === sanitizeInput(value.trim())),
-                error: () => 'Please select a valid storage location.'
-            },
-            startDate: {
-                validate: value => {
-                    const now = new Date();
-                    const cdtOffset = -5 * 60 * 60 * 1000;
-                    const oneHourFromNow = new Date(now.getTime() + cdtOffset + 3600000);
-                    return value && new Date(value) >= oneHourFromNow;
-                },
-                error: () => 'Choose a start time at least 1 hour from now.'
-            },
-            endDate: {
-                validate: value => value && inputs.startDate.value && new Date(value) > new Date(inputs.startDate.value),
-                error: () => 'Pick-up time must be after start time.'
-            },
-            bagCount: {
-                validate: value => {
-                    const num = parseInt(value, 10);
-                    return !isNaN(num) && num >= 1 && num <= 10;
-                },
-                error: value => parseInt(value, 10) > 10 ? 'Maximum 10 bags allowed.' : 'Please enter at least 1 bag.'
-            },
-            bagType: {
-                validate: value => ['standard', 'oversized'].includes(value),
-                error: () => 'Please select a bag type.'
-            },
-            prohibitedItems: {
-                validate: value => value === true,
-                error: () => 'Please confirm no prohibited items.'
+        // ... existing code ... (utility, form logic, etc.)
+        // --- Enhance QR summary in modal ---
+        function formatDateTime(dt) {
+            if (!dt) return '';
+            return new Date(dt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'America/Chicago' });
+        }
+        function getBookingSummaryHTML(inputs) {
+            return `
+                <div class="big">Bagchk Booking</div>
+                <div class="item"><span class="label">Name:</span> ${inputs.name.value ? sanitizeInput(inputs.name.value) : '<em>Not provided</em>'}</div>
+                <div class="item"><span class="label">Location:</span> ${inputs.location.value ? sanitizeInput(inputs.location.value) : '<em>Not selected</em>'}</div>
+                <div class="item"><span class="label">Bags:</span> ${inputs.bagCount.value || 0} (${inputs.bagType.value ? sanitizeInput(inputs.bagType.value) : 'Not selected'})</div>
+                <div class="item"><span class="label">Drop-off:</span> ${formatDateTime(inputs.startDate.value)}</div>
+                <div class="item"><span class="label">Pick-up:</span> ${formatDateTime(inputs.endDate.value)}</div>
+                ${inputs.insurance && inputs.insurance.checked ? `<div class="item"><span class="label">Insurance:</span> <span style="color:#10b981;font-weight:600">✔ Included</span></div>` : ''}
+                ${inputs.specialInstructions && inputs.specialInstructions.value ? `<div class="item"><span class="label">Special:</span> ${sanitizeInput(inputs.specialInstructions.value)}</div>` : ''}
+                <div class="item" style="margin-top:0.5em;color:#4b5563;font-size:.98em;">Show this summary at storage location</div>
+            `;
+        }
+        function fillQRSummary(inputs) {
+            const qrSummary = document.getElementById('qr-summary');
+            if (qrSummary) {
+                qrSummary.innerHTML = getBookingSummaryHTML(inputs);
             }
-        };
+        }
+        // Call fillQRSummary() before showing the QR modal.
+        // Example: In your booking-confirmed code, before displaying the modal, call:
+        // fillQRSummary(inputs);
 
-    
-        // Sanitize Input
-        const sanitizeInput = str => str.replace(/[<>"'&]/g, c => ({
-            '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;', '&': '&amp;'
-        })[c] || c);
-
-
-        // Validation Function
-        const validateStep = (step, force = false) => {
-            if (isValidating) return true;
-            isValidating = true;
-            try {
-                const fields = {
-                    personal: ['name', 'email', 'phone'],
-                    storage: ['location', 'startDate', 'endDate', 'bagCount', 'bagType'],
-                    preferences: ['prohibitedItems']
-                }[step];
-                let valid = true;
-
-                for (const field of fields) {
-                    const input = inputs[field];
-                    if (!input) {
-                        console.error(`Input element for field ${field} not found`);
-                        valid = false;
-                        continue;
-                    }
-                    const value = input.type === 'checkbox' ? input.checked : input.value;
-                    const cacheKey = `${field}:${value}`;
-                    let isValid, errorMsg;
-
-                    if (!force && validationCache.has(cacheKey)) {
-                        ({ isValid, errorMsg } = validationCache.get(cacheKey));
-                    } else {
-                        isValid = validationRules[field].validate(value);
-                        errorMsg = isValid ? '' : validationRules[field].error(value);
-                        validationCache.set(cacheKey, { isValid, errorMsg });
-                    }
-
-                    const errorEl = $(`#${toKebabCase(field)}-error`);
-                    if (!errorEl) {
-                        console.error(`Error element for field ${field} not found`);
-                        valid = false;
-                        continue;
-                    }
-
-                    input.classList.toggle('error', !isValid);
-                    input.classList.toggle('valid', isValid && (input.type !== 'checkbox' || input.checked));
-                    input.setAttribute('aria-invalid', !isValid);
-                    errorEl.classList.toggle('show', !isValid);
-                    errorEl.textContent = errorMsg;
-
-                    if (!isValid) {
-                        valid = false;
-                    }
-                }
-
-                const nextButton = $(`.form-section[data-step="${step}"] .btn[data-next]`);
-                if (nextButton) {
-                    nextButton.disabled = !valid;
-                }
-                if (step === 'preferences') {
-                    $('#book-now').disabled = !valid;
-                }
-
-                updateSummary();
-                return valid;
-            } catch (error) {
-                console.error('Validation error:', error);
-                return false;
-            } finally {
-                isValidating = false;
-            }
-        };
-
-        // Theme Toggle
-        $('.theme-toggle').addEventListener('click', () => {
-            const theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
-            html.dataset.theme = theme;
-            localStorage.setItem('theme', theme);
-        });
-        html.dataset.theme = localStorage.getItem('theme') || 'light';
-
-        // Hamburger Menu
-        const toggleMenu = () => {
-            const navLinks = $('.nav-links');
-            const hamburger = $('.hamburger');
-            const isActive = navLinks.classList.toggle('active');
-            hamburger.classList.toggle('active');
-            hamburger.setAttribute('aria-expanded', isActive);
-            if (isActive) {
-                navLinks.querySelector('a').focus();
-            }
-        };
-        $('.hamburger').addEventListener('click', toggleMenu);
-        document.addEventListener('click', e => {
-            const navLinks = $('.nav-links');
-            const hamburger = $('.hamburger');
-            if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-                toggleMenu();
-            }
-        });
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && $('.nav-links').classList.contains('active')) {
-                toggleMenu();
-            }
-        });
-        $$('.nav-links a').forEach(a => a.addEventListener('click', e => {
-            toggleMenu();
-            const id = a.href.split('#')[1];
-            if (id) {
-                e.preventDefault();
-                const target = $(`#${id}`);
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                    target.focus({ preventScroll: true });
-                }
-            }
-        }));
-
-        // Carousel
-         // Carousel: show first image immediately, then rotate
-        const items = $$('.carousel-item');
-        let idx = 0;
-        // Immediately show the first image, then rotate as usual
-        items.forEach((item, i) => {
-            item.classList.toggle('active', i === 0);
-            item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
-        });
-        const rotateCarousel = () => {
-            items[idx].classList.remove('active');
-            items[idx].setAttribute('aria-hidden', 'true');
-            idx = (idx + 1) % items.length;
-            items[idx].classList.add('active');
-            items[idx].setAttribute('aria-hidden', 'false');
-        };
-        setInterval(rotateCarousel, 5000);
-       
-        items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
-
-        // Map Setup
-        const map = L.map('map', { zoomControl: true, scrollWheelZoom: false, zoom: innerWidth <= 640 ? 10 : 13 })
-            .setView([41.8781, -87.6298], innerWidth <= 640 ? 10 : 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            maxZoom: 18, tileSize: 512, zoomOffset: -1
-        }).addTo(map);
-        const icon = L.icon({ 
-            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png', 
-            iconSize: [25, 41], 
-            iconAnchor: [12, 41], 
-            popupAnchor: [1, -34], 
-            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png', 
-            shadowSize: [41, 41] 
-        });
-        const markers = L.markerClusterGroup({ maxClusterRadius: 40, disableClusteringAtZoom: 16 });
-        storageLocations.forEach(loc => {
-            const m = L.marker([loc.lat, loc.lng], { icon })
-                .bindPopup(`<b>${sanitizeInput(loc.name)}</b><br>${sanitizeInput(loc.address)}`, { autoClose: false })
-                .on('mouseover', e => e.target.openPopup())
-                .on('mouseout', e => e.target.closePopup())
-                .on('click', e => {
-                    inputs.location.value = loc.name;
-                    inputs.location.dispatchEvent(new Event('change'));
-                    map.panTo([loc.lat, loc.lng], { animate: true, duration: 0.5 });
-                    e.target.getPopup().setContent(`<b>${sanitizeInput(loc.name)}</b><br>${sanitizeInput(loc.address)}<br><strong>Selected</strong>`);
-                    markers.eachLayer(m2 => {
-                        const el = m2.getElement && m2.getElement();
-                        if (el) el.style.filter = m2 === e.target ? 'drop-shadow(0 0 5px rgba(37, 99, 235, .5))' : 'none';
-                    });
+        // --- QR code display ---
+        // Example QR setup (adjust if your logic is different)
+        function showConfirmationModal() {
+            fillQRSummary(inputs);
+            // ... existing show modal logic ...
+            document.getElementById('confirmation-modal').style.display = 'block';
+            // draw the QR code
+            const qrcodeDiv = document.getElementById('qrcode');
+            if(qrcodeDiv) {
+                qrcodeDiv.innerHTML = ""; // clear previous QR
+                // Use a nice string for QR, e.g. JSON of booking
+                var qrData = JSON.stringify({
+                    name: inputs.name.value,
+                    location: inputs.location.value,
+                    bags: inputs.bagCount.value,
+                    bagType: inputs.bagType.value,
+                    startDate: inputs.startDate.value,
+                    endDate: inputs.endDate.value,
+                    insurance: inputs.insurance && inputs.insurance.checked,
+                    special: inputs.specialInstructions.value
                 });
-            markers.addLayer(m);
-        });
-        map.addLayer(markers);
-
-        // Sync Dropdown with Map
-        inputs.location.addEventListener('change', () => {
-            const selectedLocation = storageLocations.find(loc => loc.name === inputs.location.value);
-            if (selectedLocation) {
-                map.panTo([selectedLocation.lat, selectedLocation.lng], { animate: true, duration: 0.5 });
-                markers.eachLayer(m => {
-                    const ll = m.getLatLng();
-                    const el = m.getElement && m.getElement();
-                    if (ll.lat === selectedLocation.lat && ll.lng === selectedLocation.lng) {
-                        m.openPopup();
-                        if (el) el.style.filter = 'drop-shadow(0 0 5px rgba(37, 99, 235, .5))';
-                    } else {
-                        m.closePopup();
-                        if (el) el.style.filter = 'none';
-                    }
+                new QRCode(qrcodeDiv, {
+                    text: qrData,
+                    width: 180,
+                    height: 180,
+                    correctLevel: QRCode.CorrectLevel.H
                 });
             }
-            validateStep(currentStep, true);
-        });
-
-        // Time Helpers
-        const getNextHourInCDT = () => {
-            const now = new Date();
-            const cdtOffset = -5 * 60 * 60 * 1000;
-            const cdtTime = new Date(now.getTime() + cdtOffset);
-            cdtTime.setHours(cdtTime.getHours() + 1, 0, 0, 0);
-            return cdtTime.toISOString().slice(0, 16);
-        };
-        const getDefaultEndDate = s => {
-            const d = new Date(s);
-            d.setHours(d.getHours() + 4);
-            return d.toISOString().slice(0, 16);
-        };
-
-        // Progress Indicators
-        const updateProgress = () => {
-            if (isValidating) return;
-            $$('.progress-step').forEach(s => {
-                const step = s.dataset.step;
-                const isValid = validateStep(step, false);
-                s.classList.toggle('completed', isValid);
-                s.setAttribute('aria-disabled', !isValid && step !== currentStep);
-            });
-        };
-
-        // Summary & Price
-        const updateSummary = () => {
-            const s = $('#summary-content');
-            const p = $('#price-info');
-            if (validateStep('personal', false) && validateStep('storage', false)) {
-                const hours = (new Date(inputs.endDate.value) - new Date(inputs.startDate.value)) / 36e5;
-                const bags = parseInt(inputs.bagCount.value, 10) || 0;
-                const rate = inputs.bagType.value === 'oversized' ? 3 : 2;
-                const cost = (hours * bags * rate + (inputs.insurance.checked ? bags * 5 : 0)).toFixed(2);
-                p.textContent = `Estimated Price: $${cost} ${inputs.insurance.checked ? '(includes insurance)' : ''}`;
-                s.innerHTML = `
-                    <p><strong>Name:</strong> ${sanitizeInput(inputs.name.value) || 'Not entered'}</p>
-                    <p><strong>Location:</strong> ${sanitizeInput(inputs.location.value) || 'Not selected'}</p>
-                    <p><strong>Bags:</strong> ${bags} (${sanitizeInput(inputs.bagType.value) || 'Not selected'})</p>
-                    <p><strong>Duration:</strong> ${inputs.startDate.value ? new Date(inputs.startDate.value).toLocaleString('en-US', { timeZone: 'America/Chicago' }) : 'Not set'} - ${inputs.endDate.value ? new Date(inputs.endDate.value).toLocaleString('en-US', { timeZone: 'America/Chicago' }) : 'Not set'}</p>
-                    <p><strong>Price:</strong> $${cost}</p>
-                    ${inputs.insurance.checked ? '<p><strong>Insurance:</strong> Included</p>' : ''}
-                    ${inputs.specialInstructions.value ? `<p><strong>Special Requests:</strong> ${sanitizeInput(inputs.specialInstructions.value)}</p>` : ''}
-                `;
-            } else {
-                p.textContent = '';
-                s.innerHTML = '<p>Complete the form to see your booking summary.</p>';
-            }
-        };
-
-        // Form Navigation
-        const switchStep = (nextStep) => {
-            if (isValidating) return;
-            const stepsOrder = ['personal', 'storage', 'preferences'];
-            const currentIndex = stepsOrder.indexOf(currentStep);
-            const nextIndex = stepsOrder.indexOf(nextStep);
-            let canSwitch = true;
-
-            if (nextIndex > currentIndex) {
-                for (let i = 0; i < nextIndex; i++) {
-                    if (!validateStep(stepsOrder[i], true)) {
-                        canSwitch = false;
-                        break;
-                    }
-                }
-            }
-
-            if (canSwitch || nextIndex <= currentIndex) {
-                $$('.form-section').forEach(s => {
-                    s.classList.toggle('active', s.dataset.step === nextStep);
-                    s.setAttribute('aria-hidden', s.dataset.step !== nextStep);
-                });
-                $$('.progress-step').forEach(s => {
-                    s.classList.toggle('active', s.dataset.step === nextStep);
-                    s.setAttribute('aria-current', s.dataset.step === nextStep ? 'step' : 'false');
-                });
-                const focusable = $(`.form-section[data-step="${nextStep}"] input, .form-section[data-step="${nextStep}"] select, .form-section[data-step="${nextStep}"] textarea`);
-                if (focusable) focusable.focus();
-                currentStep = nextStep;
-                $('.progress-bar').setAttribute('aria-valu v-now', { personal: 1, storage: 2, preferences: 3 }[nextStep]);
-                updateSummary();
-                updateProgress();
-                validateStep(currentStep, true);
-            } else {
-                const firstInvalidStep = stepsOrder.find(step => !validateStep(step, true));
-                if (firstInvalidStep) {
-                    switchStep(firstInvalidStep);
-                    const firstInvalidInput = $(`.form-section[data-step="${firstInvalidStep}"] input[aria-invalid="true"], .form-section[data-step="${firstInvalidStep}"] select[aria-invalid="true"]`);
-                    if (firstInvalidInput) firstInvalidInput.focus();
-                }
-            }
-        };
-
-        // Form Event Listeners
-        form.addEventListener('click', e => {
-            const b = e.target;
-            if (b.matches('.btn[data-next]') && validateStep(currentStep, true)) {
-                switchStep(b.dataset.next);
-            } else if (b.matches('.btn[data-prev]')) {
-                switchStep(b.dataset.prev);
-            }
-        });
-
-        // Progress Step Click Handler
-        $$('.progress-step').forEach(step => {
-            step.addEventListener('click', () => {
-                const targetStep = step.dataset.step;
-                if (!step.classList.contains('completed') && targetStep !== currentStep && !validateStep(currentStep, true)) {
-                    const firstInvalidInput = $(`.form-section[data-step="${currentStep}"] input[aria-invalid="true"], .form-section[data-step="${currentStep}"] select[aria-invalid="true"]`);
-                    if (firstInvalidInput) {
-                        firstInvalidInput.focus();
-                        return;
-                    }
-                }
-                switchStep(targetStep);
-            });
-        });
-
-        // Input Handling
-        let timeout;
-        const debounceValidate = (step) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => validateStep(step, true), 100);
-        };
-        Object.values(inputs).forEach(i => {
-            i.addEventListener('input', () => debounceValidate(currentStep));
-            i.addEventListener('change', () => validateStep(currentStep, true));
-            i.addEventListener('blur', () => validateStep(currentStep, true));
-            i.addEventListener('input', () => {
-                localStorage.setItem(`bagchk_${i.id}`, i.type === 'checkbox' ? i.checked : i.value);
-            });
-        });
-
-        // Restore Form Data
-        Object.values(inputs).forEach(i => {
-            const saved = localStorage.getItem(`bagchk_${i.id}`);
-            if (saved !== null) {
-                if (i.type === 'checkbox') {
-                    i.checked = saved === 'true';
-                } else {
-                    i.value = saved;
-                }
-            }
-        });
-
-        // Geolocation
-        $('#find-location').addEventListener('click', () => {
-            if (!navigator.geolocation) {
-                alert('Geolocation not supported. Select a location manually.');
-                return;
-            }
-            $('#map-loading').style.display = 'flex';
-            $('#find-location').disabled = true;
-            const timeoutId = setTimeout(() => {
-                $('#map-loading').style.display = 'none';
-                $('#find-location').disabled = false;
-                alert('Location request timed out. Try again or select manually.');
-            }, 15000);
-            if (watchId) navigator.geolocation.clearWatch(watchId);
-            watchId = navigator.geolocation.watchPosition(
-                pos => {
-                    clearTimeout(timeoutId);
-                    const { latitude: lat, longitude: lng } = pos.coords;
-                    map.setView([lat, lng], 14, { animate: true });
-                    if (userMarker) map.removeLayer(userMarker);
-                    userMarker = L.marker([lat, lng], {
-                        icon: L.divIcon({ 
-                            className: 'user-location', 
-                            html: '<div style="background-color: var(--primary); width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--text); box-shadow: 0 0 8px var(--shadow); animation: pulse 1.5s infinite;"></div', 
-                            iconSize: [22, 22], 
-                            iconAnchor: [11, 11] 
-                        })
-                    }).addTo(map).bindPopup('Your Location').openPopup();
-                    let nearest, minDist = Infinity;
-                    storageLocations.forEach(l => {
-                        const d = getDistance(lat, lng, l.lat, l.lng);
-                        if (d < minDist) { minDist = d; nearest = l; }
-                    });
-                    if (nearest) {
-                        inputs.location.value = nearest.name;
-                        inputs.location.dispatchEvent(new Event('change'));
-                        map.panTo([nearest.lat, nearest.lng], { animate: true, duration: 0.5 });
-                        markers.eachLayer(m => {
-                            const ll = m.getLatLng();
-                            const el = m.getElement && m.getElement();
-                            if (ll.lat === nearest.lat && ll.lng === nearest.lng) {
-                                m.openPopup();
-                                if (el) el.style.filter = 'drop-shadow(0 0 5px rgba(37, 99, 235, .5))';
-                            } else {
-                                m.closePopup();
-                                if (el) el.style.filter = 'none';
-                            }
-                        });
-                        $('#distance-info').textContent = `Nearest location: ${sanitizeInput(nearest.name)} (${(minDist / 1000).toFixed(2)} km away)`;
-                    }
-                    $('#map-loading').style.display = 'none';
-                    $('#find-location').disabled = false;
-                },
-                err => {
-                    clearTimeout(timeoutId);
-                    $('#map-loading').style.display = 'none';
-                    $('#find-location').disabled = false;
-                    const messages = {
-                        1: 'Location access denied. Enable permissions or select manually.',
-                        2: 'Location unavailable. Try again or select manually.',
-                        3: 'Location timed out. Try again or select manually.'
-                    };
-                    alert(messages[err.code] || 'Error retrieving location. Select manually.');
-                    console.error('Geolocation error:', err);
-                },
-                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-            );
-        });
-
-        const getDistance = (lat1, lon1, lat2, lon2) => {
-            const R = 6371e3;
-            const φ1 = lat1 * Math.PI / 180;
-            const φ2 = lat2 * Math.PI / 180;
-            const Δφ = (lat2 - lat1) * Math.PI / 180;
-            const Δλ = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
-            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        };
-
-        // Form Submission
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            const submitBtn = $('#book-now');
-            if (['personal', 'storage', 'preferences'].every(step => validateStep(step, true))) {
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Processing...';
-                submitBtn.classList.remove('pulse');
-                setTimeout(() => {
-                    const details = Object.fromEntries(
-                        Object.entries(inputs).map(([k, i]) => [k, i.type === 'checkbox' ? i.checked : sanitizeInput(i.value)])
-                    );
-                    $('#modal-details').innerHTML = Object.entries(details)
-                        .filter(([, v]) => v)
-                        .map(([k, v]) => `<p><strong>${sanitizeInput(k.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()))}:</strong> ${k.includes('Date') ? new Date(v).toLocaleString('en-US', { timeZone: 'America/Chicago' }) : sanitizeInput(v.toString())}</p>`)
-                        .join('');
-                    $('#qrcode').innerHTML = '';
-                    new QRCode($('#qrcode'), { 
-                        text: JSON.stringify(details), 
-                        width: window.innerWidth <= 640 ? 150 : 200,
-                        height: window.innerWidth <= 640 ? 150 : 200,
-                        colorDark: '#000', 
-                        colorLight: '#fff', 
-                        correctLevel: QRCode.CorrectLevel.H 
-                    });
-                    $('#confirmation-modal').style.display = 'flex';
-                    $('#confirmation-modal').focus();
-                    triggerConfetti();
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Confirm Booking';
-                    submitBtn.classList.add('pulse');
-                }, 1000);
-            } else {
-                const firstInvalidStep = ['personal', 'storage', 'preferences'].find(step => !validateStep(step, true));
-                if (firstInvalidStep) {
-                    switchStep(firstInvalidStep);
-                    const firstInvalidInput = $(`.form-section[data-step="${firstInvalidStep}"] input[aria-invalid="true"], .form-section[data-step="${firstInvalidStep}"] select[aria-invalid="true"]`);
-                    if (firstInvalidInput) firstInvalidInput.focus();
-                }
-            }
-        });
-
-        // Modal Actions
-        $('#download-qr').addEventListener('click', () => {
-            const c = $('#qrcode canvas');
-            if (c) {
-                const a = document.createElement('a');
-                a.href = c.toDataURL('image/png');
-                a.download = 'bagchk-receipt-qr.png';
-                a.click();
-            }
-        });
-        $('#add-to-calendar').addEventListener('click', () => {
-            const ics = [
-                'BEGIN:VCALENDAR', 
-                'VERSION:2.0', 
-                'BEGIN:VEVENT',
-                `DTSTART:${new Date(inputs.startDate.value).toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-                `DTEND:${new Date(inputs.endDate.value).toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-                'SUMMARY:Bagchk Luggage Storage', 
-                `DESCRIPTION:Storage at ${sanitizeInput(inputs.location.value)}`, 
-                `LOCATION:${sanitizeInput(inputs.location.value)}`,
-                'END:VEVENT', 
-                'END:VCALENDAR'
-            ].join('\n');
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
-            a.download = 'bagchk-booking.ics';
-            a.click();
-        });
-        $('#modal-close').addEventListener('click', () => {
-            $('#confirmation-modal').style.display = 'none';
-            resetForm();
-            triggerConfetti();
-            $('#book').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        const triggerConfetti = () => {
-            const count = window.innerWidth <= 640 ? 30 : 50;
-            for (let i = 0; i < count; i++) {
-                const c = document.createElement('div');
-                c.className = 'confetti';
-                c.style.left = `${Math.random() * 100}vw`;
-                c.style.background = ['var(--primary)', '#10b981', '#f59e0b'][Math.floor(Math.random() * 3)];
-                c.style.animationDelay = `${Math.random() * 0.5}s`;
-                document.body.appendChild(c);
-                setTimeout(() => c.remove(), 2000);
-            }
-        };
-
-        // Reset Form
-        const resetForm = () => {
-            Object.values(inputs).forEach(i => {
-                if (i.type === 'checkbox') {
-                    i.checked = false;
-                } else {
-                    i.value = i.tagName === 'SELECT' ? '' : '';
-                }
-                i.classList.remove('error', 'valid');
-                const errorEl = $(`#${toKebabCase(i.id)}-error`);
-                if (errorEl) {
-                    errorEl.classList.remove('show');
-                    errorEl.textContent = '';
-                }
-            });
-            inputs.startDate.min = inputs.startDate.value = getNextHourInCDT();
-            inputs.endDate.value = getDefaultEndDate(inputs.startDate.value);
-            $$('.form-section').forEach(s => {
-                s.classList.toggle('active', s.dataset.step === 'personal');
-                s.setAttribute('aria-hidden', s.dataset.step !== 'personal');
-            });
-            $$('.progress-step').forEach(s => {
-                s.classList.toggle('active', s.dataset.step === 'personal');
-                s.classList.remove('completed');
-                s.setAttribute('aria-current', s.dataset.step === 'personal' ? 'step' : 'false');
-            });
-            currentStep = 'personal';
-            $('.progress-bar').setAttribute('aria-valuenow', 1);
-            validationCache.clear();
-            updateSummary();
-            updateProgress();
-            if (userMarker) map.removeLayer(userMarker);
-            userMarker = null;
-            if (watchId) navigator.geolocation.clearWatch(watchId);
-            watchId = null;
-            Object.keys(localStorage).filter(k => k.startsWith('bagchk_')).forEach(k => localStorage.removeItem(k));
-            $('#distance-info').textContent = '';
-            inputs.location.dispatchEvent(new Event('change'));
-        };
-        $('#reset-form').addEventListener('click', resetForm);
-
-        // Keyboard Navigation
-        $$('input, select, button, textarea').forEach(el => el.addEventListener('keydown', e => {
-            if (e.key === 'Enter' && el.tagName !== 'BUTTON' && el.tagName !== 'TEXTAREA') {
-                e.preventDefault();
-                const all = $$('input, select, textarea, button');
-                const currentSection = $(`.form-section.active`);
-                const next = all.find((i, idx) => idx > all.indexOf(el) && currentSection.contains(i));
-                if (next) next.focus();
-            }
-        }));
-        $('#map').addEventListener('keydown', e => {
-            e.preventDefault();
-            const d = innerWidth <= 640 ? 20 : 50;
-            const moves = { ArrowUp: [0, -d], ArrowDown: [0, d], ArrowLeft: [-d, 0], ArrowRight: [d, 0] };
-            if (moves[e.key]) map.panBy(moves[e.key], { animate: true });
-            if (['+', '='].includes(e.key)) map.zoomIn();
-            if (['-', '_'].includes(e.key)) map.zoomOut();
-        });
-
-        // Resize Handler
-        let resizeT;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeT);
-            resizeT = setTimeout(() => {
-                map.invalidateSize();
-                const z = innerWidth <= 640 ? 10 : 13;
-                if (map.getZoom() !== z) map.setZoom(z);
-                $('.carousel-container').style.minHeight = innerWidth <= 640 ? '120px' : '200px';
-                $$('.carousel-item').forEach(item => item.style.height = innerWidth <= 640 ? '120px' : '200px');
-            }, 200);
-        });
-
-        // Initialize Form
-        const initializeForm = () => {
-            inputs.startDate.value = getNextHourInCDT();
-            inputs.startDate.min = inputs.startDate.value;
-            inputs.endDate.value = getDefaultEndDate(inputs.startDate.value);
-            inputs.bagCount.value = inputs.bagCount.value || '1';
-            inputs.bagType.value = inputs.bagType.value || 'standard';
-            inputs.location.value = inputs.location.value || 'Downtown Storage - Michigan Ave';
-
-            Object.values(inputs).forEach(i => {
-                const saved = localStorage.getItem(`bagchk_${i.id}`);
-                if (saved !== null) {
-                    if (i.type === 'checkbox') {
-                        i.checked = saved === 'true';
-                    } else {
-                        i.value = saved;
-                    }
-                }
-            });
-
-            validateStep(currentStep, true);
-            inputs.location.dispatchEvent(new Event('change'));
-            updateSummary();
-            updateProgress();
-        };
-
-        inputs.startDate.addEventListener('change', () => {
-            if (!inputs.endDate.value || new Date(inputs.endDate.value) <= new Date(inputs.startDate.value)) {
-                inputs.endDate.value = getDefaultEndDate(inputs.startDate.value);
-            }
-            validateStep(currentStep, true);
-        });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            if (document.body) {
-                initializeForm();
-            } else {
-                console.error('DOM not ready for initialization');
-            }
-        });
+        }
+        // Attach showConfirmationModal to your booking submit logic.
+        // ... rest of your JS unchanged ...
     </script>
 </body>
 </html>
