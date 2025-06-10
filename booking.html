@@ -540,35 +540,7 @@
                                        <svg class="valid-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                             
-    <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const bagCountInput = document.getElementById("bag-count");
-    const bagDescriptionInput = document.getElementById("bag-description");
-    const summaryContent = document.getElementById("summary-content");
-
-    function updateSummary() {
-        const bagCount = bagCountInput.value.trim();
-        const bagDescription = bagDescriptionInput.value.trim();
-
-        let html = "<ul class='list-disc pl-4 space-y-1'>";
-        if (bagCount) {
-            html += `<li><strong>Bag Count:</strong> ${bagCount}</li>`;
-        }
-        if (bagDescription) {
-            html += `<li><strong>Bag Description:</strong> ${bagDescription}</li>`;
-        }
-        html += "</ul>";
-
-        summaryContent.innerHTML = html;
-    }
-
-    bagCountInput.addEventListener("input", updateSummary);
-    bagDescriptionInput.addEventListener("input", updateSummary);
-});
-</script>
-
-</script>
+                            
                                 <div class="form-group required">
                             <div class="form-group required">
                                 <label for="bag-type">Bag Type/Size</label>
