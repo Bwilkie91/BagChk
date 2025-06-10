@@ -869,7 +869,19 @@
             }
         }));
 
-        // Carousel
+        // // Carousel
+        // const items = $$('.carousel-item');
+        // let idx = 0;
+        // const rotateCarousel = () => {
+        //     items[idx].classList.remove('active');
+        //     items[idx].setAttribute('aria-hidden', 'true');
+        //     idx = (idx + 1) % items.length;
+        //     items[idx].classList.add('active');
+        //     items[idx].setAttribute('aria-hidden', 'false');
+        // };
+        // setInterval(rotateCarousel, 5000);
+        // items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
+  // Carousel
         const items = $$('.carousel-item');
         let idx = 0;
         const rotateCarousel = () => {
@@ -879,8 +891,12 @@
             items[idx].classList.add('active');
             items[idx].setAttribute('aria-hidden', 'false');
         };
-        setInterval(rotateCarousel, 5000);
-        items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
+        items[0].classList.add('active'); // Ensure first item is visible immediately
+        items[0].setAttribute('aria-hidden', 'false');
+        items.forEach((item, i) => {
+            if (i !== 0) item.setAttribute('aria-hidden', 'true');
+        });
+        setTimeout(() => setInterval(rotateCarousel, 5000), 5000); // Delay first rotation
 
         // Map Setup
         const map = L.map('map', { zoomControl: true, scrollWheelZoom: false, zoom: innerWidth <= 640 ? 10 : 13 })
