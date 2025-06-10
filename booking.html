@@ -633,6 +633,9 @@
     .qr-summary-box { padding: 1rem 0.6rem; font-size: 1rem; }
 }
 </style>
+
+
+    
 <script>
 // --- Enhance QR summary in modal ---
 function formatDateTime(dt) {
@@ -663,7 +666,7 @@ function fillQRSummary() {
 
 // You likely have code like this when booking is confirmed:
 // function showConfirmationModal() {
-//     fillQRSummary();
+    fillQRSummary();
     // ...other modal open logic (likely already present)...
 }
 // If you have an event or function that shows the modal, ensure `fillQRSummary()` is called before displaying.
@@ -672,8 +675,8 @@ function fillQRSummary() {
 
 // Optionally, you can call fillQRSummary() wherever you update or show the modal.
 </script>
-    <div id="confirmation-modal" class="modal">
-        <div class="modal-content">
+ <div id="confirmation-modal" class="modal">
+    <div class="modal-content">
         <h2 class="font-semibold mb-4">🎉 Booking Confirmed!</h2>
         <!-- New: Appealing summary box -->
         <div id="qr-summary" class="qr-summary-box mb-4" style="display: flex; flex-direction: column; align-items: center; background: var(--background-light,#f9fafb); border-radius: 18px; box-shadow: 0 2px 12px rgba(37,99,235,0.12); padding: 1.5rem 1rem; margin-bottom: 1.5rem;">
