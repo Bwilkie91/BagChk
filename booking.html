@@ -539,8 +539,18 @@
                                 <svg class="valid-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                                <div id="bag-details-container" class="space-y-4 mt-4"></div>
+                                <div class="form-group required">
+    <label for="bag-description">Describe Your Bags</label>
+    <textarea id="bag-description" class="w-full" placeholder="e.g., 2 suitcases and a duffle bag, all black" aria-describedby="bag-description-hint" required></textarea>
+    <span class="helper-text" id="bag-description-hint">Please describe your baggage (type, size, appearance)</span>
+    <svg class="valid-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+    </svg>
+    <div id="bag-description-error" class="error-message" role="alert"></div>
+</div>
+
                                 <div id="bag-count-error" class="error-message" role="alert"></div>
+                                
                             </div>
                             <div class="form-group required">
                                 <label for="bag-type">Bag Type/Size</label>
@@ -1383,57 +1393,34 @@
             }
         });
     </script>
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("booking-form");
     const bagCountInput = document.getElementById("bag-count");
-    const bagDetailsContainer = document.getElementById("bag-details-container");
+    const bagDescriptionInput = document.getElementById("bag-description");
+    const summaryContent = document.getElementById("summary-content");
 
-    bagCountInput.addEventListener("input", () => {
-        const count = parseInt(bagCountInput.value, 10);
-        bagDetailsContainer.innerHTML = ""; // Clear previous entries
+    function updateSummary() {
+        const bagCount = bagCountInput.value;
+        const bagDescription = bagDescriptionInput.value.trim();
 
-        if (isNaN(count) || count < 1 || count > 10) return;
-
-        for (let i = 1; i <= count; i++) {
-            const bagGroup = document.createElement("div");
-            bagGroup.className = "bag-group border p-4 rounded bg-gray-50";
-
-            bagGroup.innerHTML = `
-                <h4 class="font-semibold mb-2">Bag ${i}</h4>
-                
-                <div class="form-group required">
-                    <label for="bag-type-${i}">Type</label>
-                    <select id="bag-type-${i}" name="bag-type-${i}" class="w-full" required>
-                        <option value="">Select type</option>
-                        <option value="backpack">Backpack</option>
-                        <option value="suitcase">Suitcase</option>
-                        <option value="sports">Sports Equipment</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group required">
-                    <label for="bag-size-${i}">Size</label>
-                    <select id="bag-size-${i}" name="bag-size-${i}" class="w-full" required>
-                        <option value="">Select size</option>
-                        <option value="small">Small (carry-on)</option>
-                        <option value="medium">Medium</option>
-                        <option value="large">Large</option>
-                        <option value="oversized">Oversized</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="bag-description-${i}">Description</label>
-                    <textarea id="bag-description-${i}" name="bag-description-${i}" class="w-full" placeholder="e.g., Red Samsonite suitcase with wheels"></textarea>
-                </div>
-            `;
-
-            bagDetailsContainer.appendChild(bagGroup);
+        let summary = "<ul class='list-disc pl-4'>";
+        if (bagCount) {
+            summary += `<li><strong>Bags:</strong> ${bagCount}</li>`;
         }
-    });
+        if (bagDescription) {
+            summary += `<li><strong>Description:</strong> ${bagDescription}</li>`;
+        }
+        summary += "</ul>";
+
+        summaryContent.innerHTML = summary;
+    }
+
+    bagCountInput.addEventListener("input", updateSummary);
+    bagDescriptionInput.addEventListener("input", updateSummary);
 });
 </script>
+
 
 </body>
 </html>
