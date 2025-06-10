@@ -400,22 +400,33 @@
 </head>
 <body>
     <nav>
+           <nav class="fixed w-full z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <a href="index.html" aria-label="Bagchk Home"><img src="/BagChk2.0/images/logo.jpg" alt="Bagchk Logo" class="h-8 sm:h-9 lg:h-10 max-w-[130px] object-contain" loading="lazy"></a>
-                <div class="flex items-center gap-3">
+                <div class="flex items-center">
+                    <a href="#home">
+                                        <a href="index.html"><img src="/BagChk2.0/images/logo.jpg" alt="BagChk2.0 Logo" class="h-8 sm:h-9 lg:h-10 max-w-[130px] object-contain" loading="lazy"></a>
+
+<!--                     <img src="/BagChk2.0/logo.jpg" alt="Short-Term Storage" class="w-full h-40 sm:h-48 object-cover rounded-t-lg mb-4">
+                    </a> -->
+                </div>
+                <div class="flex items-center space-x-3">
                     <button class="theme-toggle" aria-label="Toggle dark mode">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 5v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707m-12.728 12.728l.707-.707M17.657 17.657l.707-.707" />
                         </svg>
                     </button>
-                    <button class="hamburger" aria-label="Toggle navigation menu" role="button"><div></div><div></div><div></div></button>
+                    <div class="hamburger" aria-label="Toggle navigation">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
-                <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
-                    <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
-                    <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
-                    <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
-                    <a href="#book" class="btn btn-primary p-2 sm:px-4 rounded">Book Now</a>
+                <div class="nav-links flex items-center space-x-3 sm:space-x-5 lg:space-x-6">
+                    <a href="#home" class="text-[var(--text)] hover:text-[var(--primary)] px-2 py-2 rounded-md transition-colors">Home</a>
+                    <a href="#services" class="text-[var(--text)] hover:text-[var(--primary)] px-2 py-2 rounded-md transition-colors">Services</a>
+               <a href="#contact" class="text-[var(--text)] hover:text-[var(--primary)] px-2 py-2 rounded-md transition-colors">Contact</a>
+                    <a href="/BagChk2.0/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a> 
                 </div>
             </div>
         </div>
