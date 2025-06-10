@@ -432,7 +432,7 @@
 
             </div>
  
-            <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
+                     <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
             <div id="distance-info" class="text-center text-[var(--text-light)] mb-6" aria-live="polite"></div>
             <div class="trust-section">
                 <svg class="w-6 h-6 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -536,12 +536,11 @@
                                 <label for="bag-count">How Many Bags?</label>
                                 <input type="number" id="bag-count" min="1" max="10" class="w-full" placeholder="e.g., 2" aria-describedby="bag-count-error bag-count-hint" required>
                                 <span class="helper-text" id="bag-count-hint">Enter the total number of bags (max 10)</span>
-                                   <div class="form-group required">
-                                       <svg class="valid-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
+                                <svg class="valid-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                                 </svg>
-                            
-                                <div class="form-group required">
+                                <div id="bag-count-error" class="error-message" role="alert"></div>
+                            </div>
                             <div class="form-group required">
                                 <label for="bag-type">Bag Type/Size</label>
                                 <select id="bag-type" class="w-full" aria-describedby="bag-type-error bag-type-hint" required>
