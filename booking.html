@@ -406,6 +406,15 @@
             color: #000;
         }
     </style>
+    <script>
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (prefersDark) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+</script>
+
 </head>
 <body>
 <nav>
