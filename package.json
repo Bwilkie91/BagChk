@@ -1,0 +1,12 @@
+{
+  "name": "bagchk",
+  "version": "1.0.0",
+  "description": "Bagchk luggage storage booking website",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --minify",
+    "watch:css": "tailwindcss -i ./src/styles.css -o ./dist/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}

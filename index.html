@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Bagchk - Secure Luggage Storage in Chicago</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --text: #1f2937;
+            --text-light: #4b5563;
+            --background: #f9fafb;
+            --card-bg: #ffffff;
+            --border: #d1d5db;
+        }
+
+        [data-theme="dark"] {
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --text: #e5e7eb;
+            --text-light: #9ca3af;
+            --background: #1f2937;
+            --card-bg: #374151;
+            --border: #4b5563;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background: var(--background);
+            color: var(--text);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/bagchk/background.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        [data-theme="dark"] .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/bagchk/background.jpg');
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: clamp(2rem, 5vw + 1rem, 4rem); }
+        h2 { font-size: clamp(1.5rem, 3vw + 1rem, 2.5rem); }
+        p, li, a { font-size: clamp(0.875rem, 2vw + 0.75rem, 1.125rem); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.75rem;
+            gap: 0.25rem;
+            z-index: 30;
+        }
+
+        .hamburger div {
+            width: 28px;
+            height: 3px;
+            background: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .nav-links {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] nav {
+            background: rgba(31, 41, 55, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-toggle svg {
+            stroke: var(--text);
+        }
+
+        @media (max-width: 640px) {
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                width: 100%;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1.5rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transform: translateY(-10px);
+                opacity: 0;
+                z-index: 20;
+            }
+            .nav-links.active {
+                display: flex;
+                transform: translateY(0);
+                opacity: 1;
+            }
+            .nav-links a {
+                padding: 0.75rem 0;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image {
+                background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/bagchk/background-mobile.jpg');
+            }
+            [data-theme="dark"] .hero-image {
+                background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/bagchk/background-mobile.jpg');
+            }
+        }
+
+        .animate-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .animate-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .animate-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            transition: background 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        input, textarea {
+            border-color: var(--border);
+            transition: border-color 0.3s, background 0.3s, color 0.3s;
+        }
+
+        [data-theme="dark"] input, [data-theme="dark"] textarea {
+            border-color: var(--border);
+            background: var(--card-bg);
+            color: var(--text);
+        }
+
+        [data-theme="dark"] input::placeholder, [data-theme="dark"] textarea::placeholder {
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="#home">
+                                        <a href="index.html"><img src="/bagchk/logo.jpg" alt="Bagchk Logo" class="h-8 sm:h-9 lg:h-10 max-w-[130px] object-contain" loading="lazy"></a>
+
+<!--                     <img src="/bagchk/logo.jpg" alt="Short-Term Storage" class="w-full h-40 sm:h-48 object-cover rounded-t-lg mb-4">
+                    </a> -->
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="theme-toggle" aria-label="Toggle dark mode">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707m-12.728 12.728l.707-.707M17.657 17.657l.707-.707" />
+                        </svg>
+                    </button>
+                    <div class="hamburger" aria-label="Toggle navigation">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="nav-links flex items-center space-x-3 sm:space-x-5 lg:space-x-6">
+                    <a href="#home" class="text-[var(--text)] hover:text-[var(--primary)] px-2 py-2 rounded-md transition-colors">Home</a>
+                    <a href="#services" class="text-[var(--text)] hover:text-[var(--primary)] px-2 py-2 rounded-md transition-colors">Services</a>
+               <a href="#contact" class="text-[var(--text)] hover:text-[var(--primary)] px-2 py-2 rounded-md transition-colors">Contact</a>
+                    <a href="/bagchk/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a> 
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-image min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center text-center text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="font-extrabold mb-4 sm:mb-6">Secure Luggage Storage in Chicago</h1>
+                    <a href="/bagchk/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">Our Services</h2>
+
+            <p class="text-center mb-6 sm:mb-8 max-w-3xl mx-auto text-[var(--text-light)]">Bagchk is a cutting-edge app platform revolutionizing luggage storage in Chicago. We seamlessly connect travelers with secure, affordable, and convenient storage options, so you can explore the city hands-free—no matter how long your adventure lasts.</p>
+            
+            <!-- Service Options -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg animate-card">
+                    <img src="/bagchk/sports.jpg" alt="Short-Term Storage" class="w-full h-40 sm:h-48 object-cover rounded-t-lg mb-4">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3">Short-Term Storage</h3>
+                    <p class="text-[var(--text-light)]">Perfect for a few hours of sightseeing. Drop off your bags at any of our downtown Chicago locations and enjoy the city hassle-free.</p>
+                </div>
+                <div class="bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg animate-card">
+                    <img src="/bagchk/travel.jpg" alt="Long-Term Storage" class="w-full h-40 sm:h-48 object-cover rounded-t-lg mb-4">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3">Long-Term Storage</h3>
+                    <p class="text-[var(--text-light)]">Ideal for travelers needing storage for days or weeks. Our secure facilities keep your luggage safe for as long as you need.</p>
+                </div>
+                <div class="bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg animate-card">
+                    <img src="/bagchk/business.jpg" alt="Business Solutions" class="w-full h-40 sm:h-48 object-cover rounded-t-lg mb-4">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-3">Business Solutions</h3>
+                    <p class="text-[var(--text-light)]">Tailored storage for business travelers. Store briefcases, equipment, or event materials with our flexible options.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Bagchk -->
+    <div class="mt-8 sm:mt-12 text-center">
+        <h3 class="text-xl sm:text-2xl font-semibold mb-4">Why Choose Bagchk?</h3>
+        <ul class="text-[var(--text-light)] space-y-2 max-w-2xl mx-auto">
+            <li>🔒 Partnered with vetted local businesses for secure storage locations</li>
+            <li>🧳 Bags stored in secure areas, monitored by staff</li>
+            <li>💼 Insurance protection for theft, loss, or damage</li>
+            <li>🖥️ Easy booking through app/website with instant confirmation</li>
+            <li>⏰ Flexible storage hours, no size limits, free cancellations</li>
+            <li>📷 Camera tracking and human oversight for security</li>
+            <li>📱 24/7 support via app</li>
+            <li>💳 Secure cashless payments</li>
+            <li>🔒 Lock bags, keep valuables inside, check store ratings</li>
+        </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">Get in Touch</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                <div>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-4">Contact Information</h3>
+                    <p class="text-[var(--text-light)] mb-2">Email: support@bagchk.com</p>
+                    <p class="text-[var(--text-light)] mb-2">Phone: (312) 555-1234</p>
+                    <p class="text-[var(--text-light)]">Address: 123 N Michigan Ave, Chicago, IL 60601</p>
+                </div>
+                <div>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-4">Send Us a Message</h3>
+                    <div class="space-y-4">
+                        <input type="text" placeholder="Your Name" class="w-full p-3 sm:p-4 rounded-md border border-[var(--border)] focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition">
+                        <input type="email" placeholder="Your Email" class="w-full p-3 sm:p-4 rounded-md border border-[var(--border)] focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition">
+                        <textarea placeholder="Your Message" class="w-full p-3 sm:p-4 rounded-md border border-[var(--border)] h-36 sm:h-40 focus:ring-2 focus:ring-[var(--primary)] focus:border-[var(--primary)] transition"></textarea>
+                        <button class="btn-primary px-5 sm:px-6 py-2.5 sm:py-3 rounded-md w-full sm:w-auto">Send Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[var(--card-bg)] text-[var(--text)] py-8 sm:py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold mb-4">Bagchk</h3>
+                    <p class="text-[var(--text-light)]">Secure luggage storage in Chicago. Just Hand It To Us.</p>
+                </div>
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold mb-3">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-[var(--text-light)] hover:text-[var(--primary)] transition-colors">Home</a></li>
+                        <li><a href="#services" class="text-[var(--text-light)] hover:text-[var(--primary)] transition-colors">Services</a></li>
+                        <li><a href="#contact" class="text-[var(--text-light)] hover:text-[var(--primary)] transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base sm:text-lg font-semibold mb-3">Follow Us</h3>
+                    <div class="flex space-x-4 sm:space-x-6">
+                        <a href="#" class="text-[var(--text-light)] hover:text-[var(--primary)] transition-colors">Twitter</a>
+                        <a href="#" class="text-[var(--text-light)] hover:text-[var(--primary)] transition-colors">Instagram</a>
+                        <a href="#" class="text-[var(--text-light)] hover:text-[var(--primary)] transition-colors">Facebook</a>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-[var(--text-light)] mt-6 sm:mt-8">© 2025 Bagchk. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Hamburger Menu and Theme Toggle -->
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const links = navLinks.querySelectorAll('a');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const html = document.documentElement;
+
+        hamburger.addEventListener('click', () => {
+            const isActive = navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', isActive);
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', currentTheme);
+            localStorage.setItem('theme', currentTheme);
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+    </script>
+</body>
+</html>
