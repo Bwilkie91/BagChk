@@ -1420,6 +1420,33 @@ document.addEventListener("DOMContentLoaded", () => {
     bagDescriptionInput.addEventListener("input", updateSummary);
 });
 </script>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const bagCountInput = document.getElementById("bag-count");
+    const bagDescriptionInput = document.getElementById("bag-description");
+    const summaryContent = document.getElementById("summary-content");
+
+    function updateSummary() {
+        const bagCount = bagCountInput.value.trim();
+        const bagDescription = bagDescriptionInput.value.trim();
+
+        let html = "<ul class='list-disc pl-4 space-y-1'>";
+        if (bagCount) {
+            html += `<li><strong>Bag Count:</strong> ${bagCount}</li>`;
+        }
+        if (bagDescription) {
+            html += `<li><strong>Bag Description:</strong> ${bagDescription}</li>`;
+        }
+        html += "</ul>";
+
+        summaryContent.innerHTML = html;
+    }
+
+    bagCountInput.addEventListener("input", updateSummary);
+    bagDescriptionInput.addEventListener("input", updateSummary);
+});
+</script>
+
 
 
 </body>
