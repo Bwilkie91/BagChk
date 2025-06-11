@@ -147,6 +147,30 @@
             aspect-ratio: 1/1;
         }
 
+        /* Modal details specific styles */
+        #modal-details {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            word-break: break-word;
+        }
+
+        #modal-details p {
+            margin: 0.5rem 0;
+        }
+
+        #modal-details strong {
+            font-weight: 600;
+        }
+
+        /* Dark theme adjustments */
+        [data-theme="dark"] #modal-details {
+            color: var(--text);
+        }
+
+        /* Responsive adjustments for smaller screens */
         @media (max-width: 640px) {
             body {
                 font-size: 0.875rem;
@@ -236,6 +260,11 @@
                 width: 100%;
                 min-height: 48px;
                 font-size: 0.875rem;
+            }
+
+            #modal-details {
+                font-size: 0.9375rem;
+                padding: 0.75rem;
             }
         }
 
@@ -473,8 +502,7 @@
                                 <select id="bag-type" class="w-full" aria-describedby="bag-type-error bag-type-hint" required>
                                     <option value="">Select bag type</option>
                                     <option value="standard">Standard (backpack, suitcase)</option>
-                                    <option value="oversized"> O
-                                    versized (sports gear, large bags)</option>
+                                    <option value="oversized">Oversized (sports gear, large bags)</option>
                                 </select>
                                 <span class="helper-text" id="bag-type-hint">Standard: up to 30x20x12 in; Oversized: larger items</span>
                                 <svg class="valid-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" width="16" height="16">
@@ -538,7 +566,7 @@
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
             <h2 class="font-semibold mb-4">🎉 Booking Confirmed!</h2>
-            <div id="modal-details" class="mb-4"></div>
+            <div id="modal-details" class="mb-4" aria-live="polite"></div>
             <p class="text-[var(--text-light)] mb-4">Show this QR code or a valid ID to drop off and pick up your luggage.</p>
             <div class="qr-container">
                 <div id="qrcode" role="img" aria-label="QR code containing booking details"></div>
@@ -677,7 +705,7 @@
         };
 
         const sanitizeInput = str => str.replace(/[<>"'&]/g, c => ({
-            '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;', '&': '&amp;'
+            '<': '<', '>': '>', '"': '"', "'": ''', '&': '&'
         })[c] || c);
 
         const validateStep = (step, force = false) => {
