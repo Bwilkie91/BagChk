@@ -12,17 +12,30 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        /* General enhancements */
+        /* General enhancements with theme support */
         :root {
             --primary: #2563eb;
-            --primary-dark: #1e40af; /* For hover effects */
+            --primary-dark: #1e40af;
             --background-light: #f9fafb;
+            --background: #ffffff;
+            --text: #333333;
+            --text-light: #6b7280;
             --shadow: rgba(0, 0, 0, 0.1);
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        [data-theme="dark"] {
+            --background-light: #1f2937;
+            --background: #111827;
+            --text: #f3f4f6;
+            --text-light: #9ca3af;
+            --shadow: rgba(0, 0, 0, 0.3);
         }
 
         .btn-primary {
             background-color: var(--primary);
-            color: #fff;
+            color: #ffffff;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -34,26 +47,34 @@
             transform: translateY(-2px);
         }
 
+        .btn-primary:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .btn-secondary {
-            background-color: var(--background-light);
-            color: var(--text, #333);
-            border: 1px solid var(--text-light, #6b7280);
+            background-color: var(--background);
+            color: var(--text);
+            border: 1px solid var(--text-light);
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
         .btn-secondary:hover {
-            background-color: #e5e7eb;
+            background-color: var(--background-light);
         }
 
         .form-group {
-            margin-bottom: 1.5rem; /* Consistent spacing */
+            margin-bottom: 1.5rem;
         }
 
         input, select, textarea {
-            border: 1px solid var(--text-light, #d1d5db);
+            border: 1px solid var(--text-light);
             border-radius: 6px;
+            background-color: var(--background);
+            color: var(--text);
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
@@ -74,30 +95,31 @@
         input.valid + .valid-icon,
         select.valid + .valid-icon {
             display: block;
-            color: var(--success, #10b981);
+            color: var(--success);
         }
 
-        /* Mobile-specific styles */
+        .qr-container {
+            background-color: var(--background);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--text-light);
+        }
+
+        #qrcode canvas {
+            border: 2px solid var(--text-light);
+            border-radius: 4px;
+        }
+
         @media (max-width: 640px) {
-            body {
-                font-size: 0.875rem;
-            }
-            nav .max-w-7xl, 
-            .booking-container, 
-            .footer-container {
+            body { font-size: 0.875rem; }
+            nav .max-w-7xl, .booking-container, .footer-container {
                 padding-left: 0.75rem;
                 padding-right: 0.75rem;
                 max-width: 100vw;
             }
-            h1 {
-                font-size: 1.5rem;
-            }
-            h2 {
-                font-size: 1.25rem;
-            }
-            h3 {
-                font-size: 1rem;
-            }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.25rem; }
+            h3 { font-size: 1rem; }
             .booking-grid {
                 display: flex;
                 flex-direction: column;
@@ -118,7 +140,7 @@
             }
             .booking-summary, #map {
                 min-width: 0;
-                width: 100% !important;
+                width: 100%;
                 max-width: 100vw;
                 height: 200px;
             }
@@ -126,10 +148,7 @@
                 width: 100%;
                 min-width: 0;
             }
-            .form-group input,
-            .form-group select,
-            .form-group textarea,
-            .form-group button {
+            .form-group input, .form-group select, .form-group textarea, .form-group button {
                 font-size: 0.875rem;
                 padding: 0.75rem;
                 min-height: 44px;
@@ -144,18 +163,14 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--background, #fff);
+                background: var(--background);
                 flex-direction: column;
                 display: none;
                 z-index: 99;
                 padding: 0.75rem;
             }
-            .nav-links.active {
-                display: flex;
-            }
-            .hamburger {
-                display: flex !important;
-            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: flex !important; }
             .footer-container {
                 flex-direction: column;
                 gap: 1rem;
@@ -167,6 +182,8 @@
                 max-width: 100vw;
                 padding: 1rem;
                 box-sizing: border-box;
+                background: var(--background);
+                color: var(--text);
             }
             .qr-container {
                 display: flex;
@@ -174,10 +191,7 @@
                 align-items: center;
                 gap: 1rem;
             }
-            #qrcode {
-                width: 150px;
-                height: 150px;
-            }
+            #qrcode { width: 150px; height: 150px; }
             #download-qr, #add-to-calendar, #modal-close {
                 width: 100%;
                 min-height: 48px;
@@ -185,30 +199,18 @@
             }
         }
 
-        /* Desktop-specific styles */
         @media (min-width: 641px) {
-            body {
-                font-size: 1rem;
-            }
-            nav .max-w-7xl,
-            .booking-container,
-            .footer-container {
+            body { font-size: 1rem; }
+            nav .max-w-7xl, .booking-container, .footer-container {
                 max-width: 1280px;
                 padding-left: 2rem;
                 padding-right: 2rem;
                 margin-left: auto;
                 margin-right: auto;
             }
-            h1 {
-                font-size: 2.5rem;
-                line-height: 1.2;
-            }
-            h2 {
-                font-size: 1.75rem;
-            }
-            h3 {
-                font-size: 1.25rem;
-            }
+            h1 { font-size: 2.5rem; line-height: 1.2; }
+            h2 { font-size: 1.75rem; }
+            h3 { font-size: 1.25rem; }
             .booking-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
@@ -237,21 +239,15 @@
                 gap: 0.5rem;
                 min-width: 120px;
             }
-            .booking-summary,
-            #map {
+            .booking-summary, #map {
                 width: 100%;
                 height: 400px;
                 border-radius: 8px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 8px var(--shadow);
             }
-            .form-group,
-            .form-section {
-                width: 100%;
-            }
-            .form-group input,
-            .form-group select,
-            .form-group textarea,
-            .form-group button {
+            footer { background: var(--background-light); color: var(--text); }
+            .form-group, .form-section { width: 100%; }
+            .form-group input, .form-group select, .form-group textarea, .form-group button {
                 font-size: 1rem;
                 padding: 1rem;
                 min-height: 48px;
@@ -270,13 +266,8 @@
                 background: none;
                 padding: 0;
             }
-            .nav-links a {
-                font-size: 1rem;
-                padding: 0.5rem 1rem;
-            }
-            .hamburger {
-                display: none;
-            }
+            .nav-links a { font-size: 1rem; padding: 0.5rem 1rem; }
+            .hamburger { display: none; }
             .footer-container {
                 display: grid;
                 grid-template-columns: repeat(3, 1fr);
@@ -288,6 +279,8 @@
                 max-width: 90vw;
                 padding: 2rem;
                 border-radius: 12px;
+                background: var(--background);
+                color: var(--text);
             }
             .qr-container {
                 display: flex;
@@ -295,30 +288,15 @@
                 align-items: center;
                 gap: 1.5rem;
             }
-            #qrcode {
-                width: 200px;
-                height: 200px;
-            }
-            #download-qr,
-            #add-to-calendar,
-            #modal-close {
+            #qrcode { width: 200px; height: 200px; }
+            #download-qr, #add-to-calendar, #modal-close {
                 padding: 0.75rem 1.5rem;
                 font-size: 1rem;
                 min-height: 52px;
             }
-            .btn-primary {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-                transition: background-color 0.3s, transform 0.2s;
-            }
-            .btn-primary:hover {
-                background-color: var(--primary-dark);
-                transform: translateY(-2px);
-            }
-            .btn-secondary {
-                padding: 0.75rem 1.5rem;
-                font-size: 1rem;
-            }
+            .btn-primary { padding: 0.75rem 1.5rem; font-size: 1rem; }
+            .btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
+            .btn-secondary { padding: 0.75rem 1.5rem; font-size: 1rem; }
             .trust-section {
                 display: flex;
                 align-items: center;
@@ -329,12 +307,9 @@
                 border-radius: 8px;
                 margin-bottom: 1.5rem;
             }
-            #distance-info {
-                font-size: 1rem;
-            }
+            #distance-info { font-size: 1rem; }
         }
 
-        /* General styles (unchanged) */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -350,18 +325,13 @@
         .hamburger div {
             width: 24px;
             height: 3px;
-            background: var(--text, #333);
+            background: var(--text);
             border-radius: 2px;
             transition: all 0.3s;
         }
-        .select-container {
-            position: relative;
-            width: 100%;
-        }
+        .select-container { position: relative; width: 100%; }
         .select-container select {
             appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right 0.75rem center/16px 16px;
             padding-right: 2.5rem;
             max-height: 150px;
@@ -372,12 +342,8 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
-        .select-container select.error {
-            border-color: var(--error);
-        }
-        .select-container select.valid {
-            border-color: var(--success);
-        }
+        .select-container select.error { border-color: var(--error); }
+        .select-container select.valid { border-color: var(--success); }
         .confetti {
             position: fixed;
             width: 8px;
@@ -388,58 +354,110 @@
         @keyframes fall {
             to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
-        ::selection {
-            background: var(--primary, #2563eb);
-            color: #fff;
+        ::selection { background: var(--primary); color: #fff; }
+        [data-theme="dark"] ::selection { background: var(--primary); color: #000; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
         }
-        [data-theme="dark"] ::selection {
-            background: var(--primary, #60a5fa);
-            color: #000;
+        .modal[style*="flex"] { display: flex; }
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .error-message.show { display: block; }
+        .map-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--background);
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .map-loading[style*="flex"] { display: flex; }
+        .spinner {
+            border: 2px solid var(--text-light);
+            border-top: 2px solid var(--primary);
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .tooltip {
+            visibility: hidden;
+            background: var(--background);
+            color: var(--text);
+            padding: 0.5rem;
+            border-radius: 4px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+        .progress-step:hover .tooltip { visibility: visible; }
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
-  <nav>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-            <a href="index.html" aria-label="Bagchk Home" class="flex items-center font-extrabold text-xl sm:text-2xl lg:text-3xl text-[var(--text)]">
-                <span class="text-white dark:text-white">Bag</span><span class="text-blue-500">chk</span>
-            </a>
-
-            <div class="flex items-center gap-3">
-                <button class="theme-toggle" aria-label="Toggle dark mode">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    </svg>
-                </button>
-                <button class="hamburger" aria-label="Toggle navigation menu" role="button">
-                    <div></div><div></div><div></div>
-                </button>
-            </div>
-
-            <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
-                <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
-                <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
-                <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
-                <a href="#book" class="btn btn-primary p-2 sm:px-4 rounded">Book Now</a>
+    <nav>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" aria-label="Bagchk Home" class="flex items-center font-extrabold text-xl sm:text-2xl lg:text-3xl text-[var(--text)]">
+                    <span class="text-white dark:text-white">Bag</span><span class="text-blue-500">chk</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <button class="theme-toggle" aria-label="Toggle dark mode">
+                        <svg class="w-6 h-6" fill="none" stroke="var(--text)" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                    </button>
+                    <button class="hamburger" aria-label="Toggle navigation menu" role="button">
+                        <div></div><div></div><div></div>
+                    </button>
+                </div>
+                <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
+                    <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
+                    <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
+                    <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
+                    <a href="#book" class="btn btn-primary p-2 sm:px-4 rounded">Book Now</a>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
- <section id="book" class="booking-section">
+    <section id="book" class="booking-section">
         <div class="booking-container">
-          
             <div id="distance-info" class="text-center text-[var(--text-light)] mb-6" aria-live="polite"></div>
-                        <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
-
-          
-              
-            </div>
+            <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
             <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Booking progress">
-                <div class="progress-step active" data-step="personal"><span class="step-number">1</span> Personal Info<div class="tooltip">Enter your contact details</div></div>
-                <div class="progress-step" data-step="storage"><span class="step-number">2</span> Storage Details<div class="tooltip">Choose location and timing</div></div>
-                <div class="progress-step" data-step="preferences"><span class="step-number">3</span> Preferences<div class="tooltip">Add extras and confirm</div></div>
+                <div class="progress-step active" data-step="personal" tabindex="0" role="button" aria-label="Go to Personal Info step"><span class="step-number">1</span> Personal Info<div class="tooltip">Enter your contact details</div></div>
+                <div class="progress-step" data-step="storage" tabindex="0" role="button" aria-label="Go to Storage Details step"><span class="step-number">2</span> Storage Details<div class="tooltip">Choose location and timing</div></div>
+                <div class="progress-step" data-step="preferences" tabindex="0" role="button" aria-label="Go to Preferences step"><span class="step-number">3</span> Preferences<div class="tooltip">Add extras and confirm</div></div>
             </div>
             <div class="booking-grid">
                 <div>
@@ -683,6 +701,21 @@
         // Utility to convert camelCase to kebab-case
         const toKebabCase = str => str.replace(/([A-Z])/g, '-$1').toLowerCase();
 
+        // Sanitize Input
+        const sanitizeInput = input => {
+            if (input == null) return '';
+            const str = String(input).trim();
+            return str.replace(/[<>/"'&`\\]/g, c => ({
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&apos;',
+                '&': '&amp;',
+                '`': '&#96;',
+                '\\': '&#92;'
+            })[c] || c);
+        };
+
         // Validation Rules
         const validationRules = {
             name: {
@@ -740,13 +773,6 @@
             }
         };
 
-    
-        // Sanitize Input
-        const sanitizeInput = str => str.replace(/[<>"'&]/g, c => ({
-            '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;', '&': '&amp;'
-        })[c] || c);
-
-
         // Validation Function
         const validateStep = (step, force = false) => {
             if (isValidating) return true;
@@ -791,18 +817,12 @@
                     errorEl.classList.toggle('show', !isValid);
                     errorEl.textContent = errorMsg;
 
-                    if (!isValid) {
-                        valid = false;
-                    }
+                    if (!isValid) valid = false;
                 }
 
                 const nextButton = $(`.form-section[data-step="${step}"] .btn[data-next]`);
-                if (nextButton) {
-                    nextButton.disabled = !valid;
-                }
-                if (step === 'preferences') {
-                    $('#book-now').disabled = !valid;
-                }
+                if (nextButton) nextButton.disabled = !valid;
+                if (step === 'preferences') $('#book-now').disabled = !valid;
 
                 updateSummary();
                 return valid;
@@ -819,6 +839,7 @@
             const theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
             html.dataset.theme = theme;
             localStorage.setItem('theme', theme);
+            if ($('#confirmation-modal').style.display === 'flex') updateQRCode();
         });
         html.dataset.theme = localStorage.getItem('theme') || 'light';
 
@@ -829,22 +850,16 @@
             const isActive = navLinks.classList.toggle('active');
             hamburger.classList.toggle('active');
             hamburger.setAttribute('aria-expanded', isActive);
-            if (isActive) {
-                navLinks.querySelector('a').focus();
-            }
+            if (isActive) navLinks.querySelector('a').focus();
         };
         $('.hamburger').addEventListener('click', toggleMenu);
         document.addEventListener('click', e => {
             const navLinks = $('.nav-links');
             const hamburger = $('.hamburger');
-            if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !hamburger.contains(e.target)) {
-                toggleMenu();
-            }
+            if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !hamburger.contains(e.target)) toggleMenu();
         });
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && $('.nav-links').classList.contains('active')) {
-                toggleMenu();
-            }
+            if (e.key === 'Escape' && $('.nav-links').classList.contains('active')) toggleMenu();
         });
         $$('.nav-links a').forEach(a => a.addEventListener('click', e => {
             toggleMenu();
@@ -859,33 +874,22 @@
             }
         }));
 
-        // Carousel
-        const items = $$('.carousel-item');
-        let idx = 0;
-        const rotateCarousel = () => {
-            items[idx].classList.remove('active');
-            items[idx].setAttribute('aria-hidden', 'true');
-            idx = (idx + 1) % items.length;
-            items[idx].classList.add('active');
-            items[idx].setAttribute('aria-hidden', 'false');
-        };
-        setInterval(rotateCarousel, 5000);
-        items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
-
         // Map Setup
-        const map = L.map('map', { zoomControl: true, scrollWheelZoom: false, zoom: innerWidth <= 640 ? 10 : 13 })
-            .setView([41.8781, -87.6298], innerWidth <= 640 ? 10 : 13);
+        const map = L.map('map', { zoomControl: true, scrollWheelZoom: false })
+            .setView([41.8781, -87.6298], window.innerWidth <= 640 ? 10 : 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-            maxZoom: 18, tileSize: 512, zoomOffset: -1
+            maxZoom: 18,
+            tileSize: 512,
+            zoomOffset: -1
         }).addTo(map);
-        const icon = L.icon({ 
-            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png', 
-            iconSize: [25, 41], 
-            iconAnchor: [12, 41], 
-            popupAnchor: [1, -34], 
-            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png', 
-            shadowSize: [41, 41] 
+        const icon = L.icon({
+            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+            shadowSize: [41, 41]
         });
         const markers = L.markerClusterGroup({ maxClusterRadius: 40, disableClusteringAtZoom: 16 });
         storageLocations.forEach(loc => {
@@ -978,7 +982,7 @@
         };
 
         // Form Navigation
-        const switchStep = (nextStep) => {
+        const switchStep = nextStep => {
             if (isValidating) return;
             const stepsOrder = ['personal', 'storage', 'preferences'];
             const currentIndex = stepsOrder.indexOf(currentStep);
@@ -1006,7 +1010,7 @@
                 const focusable = $(`.form-section[data-step="${nextStep}"] input, .form-section[data-step="${nextStep}"] select, .form-section[data-step="${nextStep}"] textarea`);
                 if (focusable) focusable.focus();
                 currentStep = nextStep;
-                $('.progress-bar').setAttribute('aria-valu v-now', { personal: 1, storage: 2, preferences: 3 }[nextStep]);
+                $('.progress-bar').setAttribute('aria-valuenow', stepsOrder.indexOf(nextStep) + 1);
                 updateSummary();
                 updateProgress();
                 validateStep(currentStep, true);
@@ -1022,10 +1026,11 @@
 
         // Form Event Listeners
         form.addEventListener('click', e => {
-            const b = e.target;
-            if (b.matches('.btn[data-next]') && validateStep(currentStep, true)) {
+            const b = e.target.closest('button');
+            if (!b) return;
+            if (b.matches('.btn-primary[data-next]') && validateStep(currentStep, true)) {
                 switchStep(b.dataset.next);
-            } else if (b.matches('.btn[data-prev]')) {
+            } else if (b.matches('.btn-secondary[data-prev]')) {
                 switchStep(b.dataset.prev);
             }
         });
@@ -1036,40 +1041,32 @@
                 const targetStep = step.dataset.step;
                 if (!step.classList.contains('completed') && targetStep !== currentStep && !validateStep(currentStep, true)) {
                     const firstInvalidInput = $(`.form-section[data-step="${currentStep}"] input[aria-invalid="true"], .form-section[data-step="${currentStep}"] select[aria-invalid="true"]`);
-                    if (firstInvalidInput) {
-                        firstInvalidInput.focus();
-                        return;
-                    }
+                    if (firstInvalidInput) firstInvalidInput.focus();
+                    return;
                 }
                 switchStep(targetStep);
+            });
+            step.addEventListener('keydown', e => {
+                if (['Enter', ' '].includes(e.key)) {
+                    e.preventDefault();
+                    step.click();
+                }
             });
         });
 
         // Input Handling
         let timeout;
-        const debounceValidate = (step) => {
+        const debounceValidate = step => {
             clearTimeout(timeout);
             timeout = setTimeout(() => validateStep(step, true), 100);
         };
         Object.values(inputs).forEach(i => {
             i.addEventListener('input', () => debounceValidate(currentStep));
             i.addEventListener('change', () => validateStep(currentStep, true));
-            i.addEventListener('blur', () => validateStep(currentStep, true));
+            i.addEventListener('blur', () => validateStep(currentStep));
             i.addEventListener('input', () => {
                 localStorage.setItem(`bagchk_${i.id}`, i.type === 'checkbox' ? i.checked : i.value);
             });
-        });
-
-        // Restore Form Data
-        Object.values(inputs).forEach(i => {
-            const saved = localStorage.getItem(`bagchk_${i.id}`);
-            if (saved !== null) {
-                if (i.type === 'checkbox') {
-                    i.checked = saved === 'true';
-                } else {
-                    i.value = saved;
-                }
-            }
         });
 
         // Geolocation
@@ -1084,42 +1081,34 @@
                 $('#map-loading').style.display = 'none';
                 $('#find-location').disabled = false;
                 alert('Location request timed out. Try again or select manually.');
-            }, 15000);
+            }, 10000);
             if (watchId) navigator.geolocation.clearWatch(watchId);
             watchId = navigator.geolocation.watchPosition(
                 pos => {
                     clearTimeout(timeoutId);
                     const { latitude: lat, longitude: lng } = pos.coords;
-                    map.setView([lat, lng], 14, { animate: true });
+                    const zoomLevel = window.innerWidth <= 640 ? 14 : 13;
+                    map.setView([lat, lng], zoomLevel, { animate: true });
                     if (userMarker) map.removeLayer(userMarker);
                     userMarker = L.marker([lat, lng], {
-                        icon: L.divIcon({ 
-                            className: 'user-location', 
-                            html: '<div style="background-color: var(--primary); width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--text); box-shadow: 0 0 8px var(--shadow); animation: pulse 1.5s infinite;"></div', 
-                            iconSize: [22, 22], 
-                            iconAnchor: [11, 11] 
+                        icon: L.divIcon({
+                            className: 'user-location',
+                            html: '<div style="background-color: var(--primary); width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--text); box-shadow: 0 0 8px var(--shadow); animation: pulse 1.5s infinite;"></div>',
+                            iconSize: [22, 22],
+                            iconAnchor: [11, 11]
                         })
                     }).addTo(map).bindPopup('Your Location').openPopup();
                     let nearest, minDist = Infinity;
                     storageLocations.forEach(l => {
                         const d = getDistance(lat, lng, l.lat, l.lng);
-                        if (d < minDist) { minDist = d; nearest = l; }
+                        if (d < minDist) {
+                            minDist = d;
+                            nearest = l;
+                        }
                     });
                     if (nearest) {
                         inputs.location.value = nearest.name;
                         inputs.location.dispatchEvent(new Event('change'));
-                        map.panTo([nearest.lat, nearest.lng], { animate: true, duration: 0.5 });
-                        markers.eachLayer(m => {
-                            const ll = m.getLatLng();
-                            const el = m.getElement && m.getElement();
-                            if (ll.lat === nearest.lat && ll.lng === nearest.lng) {
-                                m.openPopup();
-                                if (el) el.style.filter = 'drop-shadow(0 0 5px rgba(37, 99, 235, .5))';
-                            } else {
-                                m.closePopup();
-                                if (el) el.style.filter = 'none';
-                            }
-                        });
                         $('#distance-info').textContent = `Nearest location: ${sanitizeInput(nearest.name)} (${(minDist / 1000).toFixed(2)} km away)`;
                     }
                     $('#map-loading').style.display = 'none';
@@ -1132,7 +1121,7 @@
                     const messages = {
                         1: 'Location access denied. Enable permissions or select manually.',
                         2: 'Location unavailable. Try again or select manually.',
-                        3: 'Location timed out. Try again or select manually.'
+                        3: 'Location request timed out. Try again or select manually.'
                     };
                     alert(messages[err.code] || 'Error retrieving location. Select manually.');
                     console.error('Geolocation error:', err);
@@ -1151,6 +1140,27 @@
             return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         };
 
+        // QR Code Update
+        const updateQRCode = () => {
+            $('#qrcode').innerHTML = '';
+            const details = Object.fromEntries(
+                Object.entries(inputs).map(([k, i]) => [k, i.type === 'checkbox' ? i.checked : sanitizeInput(i.value)])
+            );
+            try {
+                new QRCode($('#qrcode'), {
+                    text: JSON.stringify(details),
+                    width: window.innerWidth <= 640 ? 150 : 200,
+                    height: window.innerWidth <= 640 ? 150 : 200,
+                    colorDark: html.dataset.theme === 'dark' ? '#ffffff' : '#333333',
+                    colorLight: html.dataset.theme === 'dark' ? '#111827' : '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } catch (error) {
+                console.error('QR code generation failed:', error);
+                $('#qrcode').innerHTML = '<p>Error generating QR code. Please contact support.</p>';
+            }
+        };
+
         // Form Submission
         form.addEventListener('submit', e => {
             e.preventDefault();
@@ -1160,22 +1170,7 @@
                 submitBtn.textContent = 'Processing...';
                 submitBtn.classList.remove('pulse');
                 setTimeout(() => {
-                    const details = Object.fromEntries(
-                        Object.entries(inputs).map(([k, i]) => [k, i.type === 'checkbox' ? i.checked : sanitizeInput(i.value)])
-                    );
-                    $('#modal-details').innerHTML = Object.entries(details)
-                        .filter(([, v]) => v)
-                        .map(([k, v]) => `<p><strong>${sanitizeInput(k.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()))}:</strong> ${k.includes('Date') ? new Date(v).toLocaleString('en-US', { timeZone: 'America/Chicago' }) : sanitizeInput(v.toString())}</p>`)
-                        .join('');
-                    $('#qrcode').innerHTML = '';
-                    new QRCode($('#qrcode'), { 
-                        text: JSON.stringify(details), 
-                        width: window.innerWidth <= 640 ? 150 : 200,
-                        height: window.innerWidth <= 640 ? 150 : 200,
-                        colorDark: '#000', 
-                        colorLight: '#fff', 
-                        correctLevel: QRCode.CorrectLevel.H 
-                    });
+                    updateQRCode();
                     $('#confirmation-modal').style.display = 'flex';
                     $('#confirmation-modal').focus();
                     triggerConfetti();
@@ -1195,7 +1190,7 @@
 
         // Modal Actions
         $('#download-qr').addEventListener('click', () => {
-            const c = $('#qrcode canvas');
+            const c = $('#qrcode').querySelector('canvas');
             if (c) {
                 const a = document.createElement('a');
                 a.href = c.toDataURL('image/png');
@@ -1205,15 +1200,15 @@
         });
         $('#add-to-calendar').addEventListener('click', () => {
             const ics = [
-                'BEGIN:VCALENDAR', 
-                'VERSION:2.0', 
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
                 'BEGIN:VEVENT',
                 `DTSTART:${new Date(inputs.startDate.value).toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
                 `DTEND:${new Date(inputs.endDate.value).toISOString().replace(/[-:]/g, '').split('.')[0]}Z`,
-                'SUMMARY:Bagchk Luggage Storage', 
-                `DESCRIPTION:Storage at ${sanitizeInput(inputs.location.value)}`, 
+                'SUMMARY:Bagchk Luggage Storage',
+                `DESCRIPTION:Storage at ${sanitizeInput(inputs.location.value)}`,
                 `LOCATION:${sanitizeInput(inputs.location.value)}`,
-                'END:VEVENT', 
+                'END:VEVENT',
                 'END:VCALENDAR'
             ].join('\n');
             const a = document.createElement('a');
@@ -1224,6 +1219,7 @@
         $('#modal-close').addEventListener('click', () => {
             $('#confirmation-modal').style.display = 'none';
             resetForm();
+            Object.keys(localStorage).filter(k => k.startsWith('bagchk_')).forEach(k => localStorage.removeItem(k));
             triggerConfetti();
             $('#book').scrollIntoView({ behavior: 'smooth' });
         });
@@ -1234,7 +1230,7 @@
                 const c = document.createElement('div');
                 c.className = 'confetti';
                 c.style.left = `${Math.random() * 100}vw`;
-                c.style.background = ['var(--primary)', '#10b981', '#f59e0b'][Math.floor(Math.random() * 3)];
+                c.style.backgroundColor = ['var(--primary)', '#10b981', '#f59e0b'][Math.floor(Math.random() * 3)];
                 c.style.animationDelay = `${Math.random() * 0.5}s`;
                 document.body.appendChild(c);
                 setTimeout(() => c.remove(), 2000);
@@ -1243,20 +1239,20 @@
 
         // Reset Form
         const resetForm = () => {
-            Object.values(inputs).forEach(i => {
+            Object.entries(inputs).forEach(([key, i]) => {
                 if (i.type === 'checkbox') {
                     i.checked = false;
                 } else {
                     i.value = i.tagName === 'SELECT' ? '' : '';
                 }
                 i.classList.remove('error', 'valid');
-                const errorEl = $(`#${toKebabCase(i.id)}-error`);
+                const errorEl = $(`#${toKebabCase(key)}-error`);
                 if (errorEl) {
                     errorEl.classList.remove('show');
                     errorEl.textContent = '';
                 }
             });
-            inputs.startDate.min = inputs.startDate.value = getNextHourInCDT();
+            inputs.startDate.value = getNextHourInCDT();
             inputs.endDate.value = getDefaultEndDate(inputs.startDate.value);
             $$('.form-section').forEach(s => {
                 s.classList.toggle('active', s.dataset.step === 'personal');
@@ -1268,7 +1264,7 @@
                 s.setAttribute('aria-current', s.dataset.step === 'personal' ? 'step' : 'false');
             });
             currentStep = 'personal';
-            $('.progress-bar').setAttribute('aria-valuenow', 1);
+            $('.progress-bar').setAttribute('aria-valuenow', '1');
             validationCache.clear();
             updateSummary();
             updateProgress();
@@ -1276,11 +1272,12 @@
             userMarker = null;
             if (watchId) navigator.geolocation.clearWatch(watchId);
             watchId = null;
-            Object.keys(localStorage).filter(k => k.startsWith('bagchk_')).forEach(k => localStorage.removeItem(k));
             $('#distance-info').textContent = '';
             inputs.location.dispatchEvent(new Event('change'));
         };
-        $('#reset-form').addEventListener('click', resetForm);
+        $('#reset-form').addEventListener('click', () => {
+            if (confirm('Are you sure you want to reset the form? All data will be cleared.')) resetForm();
+        });
 
         // Keyboard Navigation
         $$('input, select, button, textarea').forEach(el => el.addEventListener('keydown', e => {
@@ -1288,13 +1285,14 @@
                 e.preventDefault();
                 const all = $$('input, select, textarea, button');
                 const currentSection = $(`.form-section.active`);
-                const next = all.find((i, idx) => idx > all.indexOf(el) && currentSection.contains(i));
+                const currentIndex = all.indexOf(el);
+                const next = all.find((i, idx) => idx > currentIndex && currentSection.contains(i));
                 if (next) next.focus();
             }
         }));
         $('#map').addEventListener('keydown', e => {
             e.preventDefault();
-            const d = innerWidth <= 640 ? 20 : 50;
+            const d = window.innerWidth <= 640 ? 20 : 50;
             const moves = { ArrowUp: [0, -d], ArrowDown: [0, d], ArrowLeft: [-d, 0], ArrowRight: [d, 0] };
             if (moves[e.key]) map.panBy(moves[e.key], { animate: true });
             if (['+', '='].includes(e.key)) map.zoomIn();
@@ -1302,23 +1300,26 @@
         });
 
         // Resize Handler
-        let resizeT;
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            clearTimeout(resizeT);
-            resizeT = setTimeout(() => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
                 map.invalidateSize();
-                const z = innerWidth <= 640 ? 10 : 13;
-                if (map.getZoom() !== z) map.setZoom(z);
-                $('.carousel-container').style.minHeight = innerWidth <= 640 ? '120px' : '200px';
-                $$('.carousel-item').forEach(item => item.style.height = innerWidth <= 640 ? '120px' : '200px');
+                const zoom = window.innerWidth <= 640 ? 10 : 13;
+                if (map.getZoom() !== zoom) map.setZoom(zoom);
             }, 200);
         });
 
         // Initialize Form
         const initializeForm = () => {
-            inputs.startDate.value = getNextHourInCDT();
-            inputs.startDate.min = inputs.startDate.value;
-            inputs.endDate.value = getDefaultEndDate(inputs.startDate.value);
+            const now = new Date();
+            const maxDate = new Date(now.getTime() + 30 * 24 * 3600000);
+            inputs.startDate.min = getNextHourInCDT();
+            inputs.startDate.max = maxDate.toISOString().slice(0, 16);
+            inputs.startDate.value = inputs.startDate.value || getNextHourInCDT();
+            inputs.endDate.min = inputs.startDate.value;
+            inputs.endDate.max = maxDate.toISOString().slice(0, 16);
+            inputs.endDate.value = inputs.endDate.value || getDefaultEndDate(inputs.startDate.value);
             inputs.bagCount.value = inputs.bagCount.value || '1';
             inputs.bagType.value = inputs.bagType.value || 'standard';
             inputs.location.value = inputs.location.value || 'Downtown Storage - Michigan Ave';
@@ -1326,11 +1327,8 @@
             Object.values(inputs).forEach(i => {
                 const saved = localStorage.getItem(`bagchk_${i.id}`);
                 if (saved !== null) {
-                    if (i.type === 'checkbox') {
-                        i.checked = saved === 'true';
-                    } else {
-                        i.value = saved;
-                    }
+                    if (i.type === 'checkbox') i.checked = saved === 'true';
+                    else i.value = saved;
                 }
             });
 
@@ -1341,19 +1339,14 @@
         };
 
         inputs.startDate.addEventListener('change', () => {
+            inputs.endDate.min = inputs.startDate.value;
             if (!inputs.endDate.value || new Date(inputs.endDate.value) <= new Date(inputs.startDate.value)) {
                 inputs.endDate.value = getDefaultEndDate(inputs.startDate.value);
             }
             validateStep(currentStep, true);
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            if (document.body) {
-                initializeForm();
-            } else {
-                console.error('DOM not ready for initialization');
-            }
-        });
+        document.addEventListener('DOMContentLoaded', initializeForm);
     </script>
 </body>
-</html>  
+</html>
