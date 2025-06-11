@@ -396,6 +396,23 @@
             background: var(--primary, #60a5fa);
             color: #000;
         }
+            
+        /* Hero Section */
+        .hero-image {
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('/BagChk2.0/images/background-mobile.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+        }
+        [data-theme="dark"] .hero-image {
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.7)), url('/BagChk2.0/images/background-mobile.jpg');
+        }
+
     </style>
 <!--     <style>
         :root {
