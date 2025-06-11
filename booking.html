@@ -400,8 +400,8 @@
 
     <main>
         <section id="book" class="booking-container py-8">
-            <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
             <div id="distance-info" class="text-center text-[var(--text-light)] mb-6" aria-live="polite"></div>
+                        <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
             <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Booking progress">
                 <div class="progress-step active" data-step="personal"><span class="step-number">1</span> Personal Info<div class="tooltip">Enter your contact details</div></div>
                 <div class="progress-step" data-step="storage"><span class="step-number">2</span> Storage Details<div class="tooltip">Choose location and timing</div></div>
@@ -704,8 +704,9 @@
             }
         };
 
+        // Sanitize Input
         const sanitizeInput = str => str.replace(/[<>"'&]/g, c => ({
-            '<': '<', '>': '>', '"': '"', "'": ''', '&': '&'
+            '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;', '&': '&amp;'
         })[c] || c);
 
         const validateStep = (step, force = false) => {
