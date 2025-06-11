@@ -437,11 +437,7 @@
                 <div class="carousel-item" style="background-image: url('/BagChk2.0/images/mpark.jpg')"></div>
             </div>
   <!-- Hero Section -->
-    <section id="home" class="hero-image min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center text-center text-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 class="font-extrabold mb-4 sm:mb-6">Secure Luggage Storage in Chicago</h1>
-                    <a href="/bagchk/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
-        </div>
+ 
     </section>
             <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
             <div id="distance-info" class="text-center text-[var(--text-light)] mb-6" aria-live="polite"></div>
@@ -890,7 +886,7 @@
             items[idx].classList.add('active');
             items[idx].setAttribute('aria-hidden', 'false');
         };
-        setInterval(rotateCarousel, 5000);
+        setInterval(rotateCarousel, 3000);
         items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
 
         // Map Setup
