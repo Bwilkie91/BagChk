@@ -134,11 +134,38 @@
             max-height: 90vh;
             overflow-y: auto;
             color: var(--text);
+            position: relative;
         }
 
         [data-theme="dark"] .modal-content {
             background: #2d3748;
             color: #e5e7eb;
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-close-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--text);
         }
 
         .qr-container {
@@ -277,7 +304,7 @@
                 height: min(80vw, 200px);
             }
 
-            #download-qr, #add-to-calendar, #modal-close {
+            #download-qr, #add-to-calendar, #share-text, #modal-close {
                 width: 100%;
                 min-height: 48px;
                 font-size: 0.875rem;
@@ -327,7 +354,7 @@
                 height: 200px;
             }
 
-            #download-qr, #add-to-calendar, #modal-close {
+            #download-qr, #add-to-calendar, #share-text, #modal-close {
                 min-height: 52px;
             }
         }
@@ -430,7 +457,7 @@
             </div>
             <div class="booking-grid">
                 <div>
-                    <h2 class="font planet-semibold mb-4">Your Booking Details</h2>
+                    <h2 class="font-semibold mb-4">Your Booking Details</h2>
                     <form id="booking-form" novalidate>
                         <div class="form-section active" data-step="personal">
                             <h3 class="font-semibold mb-2">Tell Us About You</h3>
@@ -586,6 +613,11 @@
 
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
+            <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
             <h2 class="font-semibold mb-4">🎉 Booking Confirmed!</h2>
             <div id="modal-details" class="mb-4" aria-live="polite"></div>
             <p class="text-[var(--text-light)] mb-4">Show this QR code or a valid ID to drop off and pick up your luggage.</p>
@@ -593,6 +625,7 @@
                 <div id="qrcode" role="img" aria-label="QR code containing booking details"></div>
                 <button id="download-qr" class="btn btn-primary">Download QR Code</button>
                 <button id="add-to-calendar" class="btn btn-primary">Add to Calendar</button>
+                <button id="share-text" class="btn btn-primary">Share via Text</button>
             </div>
             <div class="flex justify-end gap-4 mt-4">
                 <button id="modal-close" class="btn btn-primary">Done</button>
@@ -724,12 +757,10 @@
                 error: () => 'Please confirm no prohibited items.'
             }
         };
-
         // Sanitize Input
         const sanitizeInput = str => str.replace(/[<>"'&]/g, c => ({
             '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;', '&': '&amp;'
         })[c] || c);
-
 
         const validateStep = (step, force = false) => {
             if (isValidating) return true;
@@ -877,7 +908,7 @@
         inputs.location.addEventListener('change', () => {
             const selectedLocation = storageLocations.find(loc => loc.name === inputs.location.value);
             if (selectedLocation) {
-                map.panTo([selectedLocation.lat, selectedLocation.lng], { animate: true, duration: 0.5 });
+                map.panTo([selectedLocation.lat, selectedLocation.lng], { animate: true, duration: 0.0 });
                 markers.eachLayer(m => {
                     const ll = m.getLatLng();
                     const el = m.getElement && m.getElement();
@@ -901,10 +932,10 @@
             return cdtTime.toISOString().slice(0, 16);
         };
         const getDefaultEndDate = s => {
-            const d = new Date(s);
+            const d = new Date();
             d.setHours(d.getHours() + 4);
             return d.toISOString().slice(0, 16);
-        };
+        });
 
         const updateProgress = () => {
             if (isValidating) return;
@@ -927,18 +958,18 @@
                 p.textContent = `Estimated Price: $${cost} ${inputs.insurance.checked ? '(includes insurance)' : ''}`;
                 s.innerHTML = `
                     <p><strong>Name:</strong> ${sanitizeInput(inputs.name.value) || 'Not entered'}</p>
-                    <p><strong>Location:</strong> ${sanitizeInput(inputs.location.value) || 'Not selected'}</p>
+                    <p><strong>Location:</strong></strong> ${sanitizeInput(inputs.location.value) || 'Not selected'}</p>
                     <p><strong>Bags:</strong> ${bags} (${sanitizeInput(inputs.bagType.value) || 'Not selected'})</p>
                     <p><strong>Duration:</strong> ${inputs.startDate.value ? new Date(inputs.startDate.value).toLocaleString('en-US', { timeZone: 'America/Chicago' }) : 'Not set'} - ${inputs.endDate.value ? new Date(inputs.endDate.value).toLocaleString('en-US', { timeZone: 'America/Chicago' }) : 'Not set'}</p>
                     <p><strong>Price:</strong> $${cost}</p>
-                    ${inputs.insurance.checked ? '<p><strong>Insurance:</strong> Included</p>' : ''}
+                    ${inputs.insurance.checked ? '<p><strong>Insurance:</strong> Included</p>' : ''} 
                     ${inputs.specialInstructions.value ? `<p><strong>Special Requests:</strong> ${sanitizeInput(inputs.specialInstructions.value)}</p>` : ''}
                 `;
             } else {
                 p.textContent = '';
                 s.innerHTML = '<p>Complete the form to see your booking summary.</p>';
             }
-        };
+        });
 
         const switchStep = (nextStep) => {
             if (isValidating) return;
@@ -1057,7 +1088,7 @@
                             iconAnchor: [11, 11] 
                         })
                     }).addTo(map).bindPopup('Your Location').openPopup();
-                    let nearest, minDist = Infinity;
+                    let nearest = null, minDist = Infinity;
                     storageLocations.forEach(l => {
                         const d = getDistance(lat, lng, l.lat, l.lng);
                         if (d < minDist) { minDist = d; nearest = l; }
@@ -1106,6 +1137,13 @@
             const Δλ = (lon2 - lon1) * Math.PI / 180;
             const a = Math.sin(Δφ / 2) ** 2 + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) ** 2;
             return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        };
+
+        const closeModal = () => {
+            $('#confirmation-modal').style.display = 'none';
+            resetForm();
+            triggerConfetti();
+            $('#book').scrollIntoView({ behavior: 'smooth' });
         };
 
         form.addEventListener('submit', e => {
@@ -1158,6 +1196,7 @@
                 a.click();
             }
         });
+
         $('#add-to-calendar').addEventListener('click', () => {
             const ics = [
                 'BEGIN:VCALENDAR', 
@@ -1176,12 +1215,49 @@
             a.download = 'bagchk-booking.ics';
             a.click();
         });
-        $('#modal-close').addEventListener('click', () => {
-            $('#confirmation-modal').style.display = 'none';
-            resetForm();
-            triggerConfetti();
-            $('#book').scrollIntoView({ behavior: 'smooth' });
+
+        $('#share-text').addEventListener('click', () => {
+            const details = Object.fromEntries(
+                Object.entries(inputs).map(([k, i]) => [k, i.type === 'checkbox' ? i.checked : sanitizeInput(i.value)])
+            );
+            const hours = (new Date(inputs.endDate.value) - new Date(inputs.startDate.value)) / 36e5;
+            const bags = parseInt(inputs.bagCount.value, 10) || 0;
+            const rate = inputs.bagType.value === 'oversized' ? 3 : 2;
+            const cost = (hours * bags * rate + (inputs.insurance.checked ? bags * 5 : 0)).toFixed(2);
+            const textSummary = [
+                `Bagchk Booking Confirmation`,
+                `Name: ${details.name || 'Not entered'}`,
+                `Location: ${details.location || 'Not selected'}`,
+                `Bags: ${bags} (${details.bagType || 'Not selected'})`,
+                `Drop-off: ${details.startDate ? new Date(details.startDate).toLocaleString('en-US', { timeZone: 'America/Chicago' }) : 'Not set'}`,
+                `Pick-up: ${details.endDate ? new Date(details.endDate).toLocaleString('en-US', { timeZone: 'America/Chicago' }) : 'Not set'}`,
+                `Price: $${cost}`,
+                details.insurance ? `Insurance: Included` : '',
+                details.specialInstructions ? `Special Requests: ${details.specialInstructions}` : '',
+                `Show QR code or ID at ${details.location || 'the storage location'} to drop off/pick up.`
+            ].filter(line => line).join('\n');
+
+            if (navigator.share && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                navigator.share({
+                    title: 'Bagchk Booking Confirmation',
+                    text: textSummary
+                }).catch(err => {
+                    console.error('Share failed:', err);
+                    fallbackShareText(textSummary);
+                });
+            } else {
+                fallbackShareText(textSummary);
+            }
         });
+
+        const fallbackShareText = (text) => {
+            const a = document.createElement('a');
+            a.href = `sms:?body=${encodeURIComponent(text)}`;
+            a.click();
+        };
+
+        $('#modal-close').addEventListener('click', closeModal);
+        $('#modal-close-btn').addEventListener('click', closeModal);
 
         const triggerConfetti = () => {
             const count = window.innerWidth <= 640 ? 30 : 50;
@@ -1282,7 +1358,6 @@
                     }
                 }
             });
-
             validateStep(currentStep, true);
             inputs.location.dispatchEvent(new Event('change'));
             updateSummary();
