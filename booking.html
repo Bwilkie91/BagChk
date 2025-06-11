@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <meta name="description" content="Book secure luggage storage in Chicago with Bagchk.">
     <title>Book Luggage Storage - Bagchk</title>
     <link rel="stylesheet" href="dist/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -13,33 +12,21 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
+        /* General enhancements */
         :root {
             --primary: #2563eb;
-            --primary-dark: #1e40af;
+            --primary-dark: #1e40af; /* For hover effects */
             --background-light: #f9fafb;
             --shadow: rgba(0, 0, 0, 0.1);
-            --text: #333;
-            --text-light: #6b7280;
-            --success: #10b981;
-            --error: #ef4444;
-        }
-
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, sans-serif;
-            background: var(--background-light);
         }
 
         .btn-primary {
             background-color: var(--primary);
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.2s;
-            padding: 0.75rem 1.5rem;
-            min-height: 48px;
-            font-size: 1rem;
         }
 
         .btn-primary:hover {
@@ -47,22 +34,13 @@
             transform: translateY(-2px);
         }
 
-        .btn-primary:disabled {
-            background-color: #6b7280;
-            cursor: not-allowed;
-            transform: none;
-        }
-
         .btn-secondary {
             background-color: var(--background-light);
-            color: var(--text);
-            border: 1px solid var(--text-light);
-            border-radius: 8px;
+            color: var(--text, #333);
+            border: 1px solid var(--text-light, #6b7280);
+            border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s;
-            padding: 0.75rem 1.5rem;
-            min-height: 48px;
-            font-size: 1rem;
         }
 
         .btn-secondary:hover {
@@ -70,16 +48,12 @@
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
-            position: relative;
+            margin-bottom: 1.5rem; /* Consistent spacing */
         }
 
         input, select, textarea {
-            border: 1px solid var(--text-light);
-            border-radius: 8px;
-            padding: 0.75rem;
-            width: 100%;
-            box-sizing: border-box;
+            border: 1px solid var(--text-light, #d1d5db);
+            border-radius: 6px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
@@ -95,272 +69,315 @@
             top: 50%;
             transform: translateY(-50%);
             display: none;
-            color: var(--success);
         }
 
         input.valid + .valid-icon,
         select.valid + .valid-icon {
             display: block;
+            color: var(--success, #10b981);
         }
 
-        .error-message {
-            color: var(--error);
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        .modal-content {
-            background: #fff;
-            border-radius: 12px;
-            padding: 1.5rem;
-            max-height: 90vh;
-            overflow-y: auto;
-            color: var(--text);
-        }
-
-        [data-theme="dark"] .modal-content {
-            background: #2d3748;
-            color: #e5e7eb;
-        }
-
-        .qr-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        #qrcode {
-            max-width: 100%;
-            aspect-ratio: 1/1;
-            background: #fff;
-            padding: 0.5rem;
-            border-radius: 8px;
-        }
-
-        [data-theme="dark"] #qrcode {
-            background: #fff;
-        }
-
-        /* Modal details specific styles */
-        #modal-details {
-            font-size: 1rem;
-            line-height: 1.6;
-            color: var(--text);
-            margin-bottom: 1.5rem;
-            padding: 1rem;
-            word-break: break-word;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        #modal-details p {
-            margin: 0.5rem 0;
-        }
-
-        #modal-details strong {
-            font-weight: 600;
-        }
-
-        [data-theme="dark"] #modal-details {
-            color: #e5e7eb;
-        }
-
-        [data-theme="dark"] #modal-details strong {
-            color: #f3f4f6;
-        }
-
-        /* Responsive adjustments for smaller screens */
+        /* Mobile-specific styles */
         @media (max-width: 640px) {
             body {
                 font-size: 0.875rem;
             }
-
             nav .max-w-7xl, 
             .booking-container, 
             .footer-container {
-                padding: 0.75rem;
+                padding-left: 0.75rem;
+                padding-right: 0.75rem;
                 max-width: 100vw;
             }
-
             h1 {
                 font-size: 1.5rem;
             }
-
             h2 {
                 font-size: 1.25rem;
             }
-
             h3 {
                 font-size: 1rem;
             }
-
             .booking-grid {
+                display: flex;
                 flex-direction: column;
                 gap: 1.5rem;
             }
-
+            .carousel-container {
+                min-height: 120px;
+                max-height: 140px;
+            }
+            .carousel-item {
+                background-size: cover;
+                background-position: center;
+                height: 120px;
+            }
             .progress-bar {
                 flex-direction: column;
                 gap: 0.5rem;
-                padding: 0.5rem;
             }
-
             .booking-summary, #map {
-                width: 100%;
+                min-width: 0;
+                width: 100% !important;
                 max-width: 100vw;
                 height: 200px;
             }
-
+            .form-group, .form-section {
+                width: 100%;
+                min-width: 0;
+            }
             .form-group input,
             .form-group select,
             .form-group textarea,
             .form-group button {
                 font-size: 0.875rem;
                 padding: 0.75rem;
-                min-height: 48px;
+                min-height: 44px;
+                box-sizing: border-box;
             }
-
             .form-navigation {
                 flex-direction: column;
                 gap: 0.75rem;
             }
-
             .nav-links {
                 position: absolute;
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: #fff;
+                background: var(--background, #fff);
                 flex-direction: column;
                 display: none;
                 z-index: 99;
                 padding: 0.75rem;
             }
-
-            [data-theme="dark"] .nav-links {
-                background: #2d3748;
-            }
-
             .nav-links.active {
                 display: flex;
             }
-
             .hamburger {
                 display: flex !important;
             }
-
+            .footer-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding-bottom: 1.5rem;
+            }
             .modal-content {
-                width: 95vw;
+                width: 90vw;
+                min-width: unset;
+                max-width: 100vw;
                 padding: 1rem;
+                box-sizing: border-box;
             }
-
+            .qr-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
             #qrcode {
-                width: min(80vw, 200px);
-                height: min(80vw, 200px);
+                width: 150px;
+                height: 150px;
             }
-
             #download-qr, #add-to-calendar, #modal-close {
                 width: 100%;
                 min-height: 48px;
                 font-size: 0.875rem;
             }
-
-            #modal-details {
-                font-size: 0.9375rem;
-                padding: 0.75rem;
-            }
         }
 
+        /* Desktop-specific styles */
         @media (min-width: 641px) {
+            body {
+                font-size: 1rem;
+            }
             nav .max-w-7xl,
             .booking-container,
             .footer-container {
                 max-width: 1280px;
-                padding: 0 2rem;
-                margin: 0 auto;
+                padding-left: 2rem;
+                padding-right: 2rem;
+                margin-left: auto;
+                margin-right: auto;
             }
-
+            h1 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            h2 {
+                font-size: 1.75rem;
+            }
+            h3 {
+                font-size: 1.25rem;
+            }
             .booking-grid {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 2rem;
+                align-items: start;
             }
-
+            .carousel-container {
+                min-height: 200px;
+                max-height: 240px;
+            }
+            .carousel-item {
+                background-size: cover;
+                background-position: center;
+                height: 200px;
+            }
             .progress-bar {
+                display: flex;
                 flex-direction: row;
                 gap: 1.5rem;
                 justify-content: center;
             }
-
-            .booking-summary, #map {
+            .progress-step {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                min-width: 120px;
+            }
+            .booking-summary,
+            #map {
+                width: 100%;
                 height: 400px;
                 border-radius: 8px;
-                box-shadow: 0 2px 8px var(--shadow);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             }
-
+            .form-group,
+            .form-section {
+                width: 100%;
+            }
+            .form-group input,
+            .form-group select,
+            .form-group textarea,
+            .form-group button {
+                font-size: 1rem;
+                padding: 1rem;
+                min-height: 48px;
+                border-radius: 6px;
+            }
+            .form-navigation {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+                justify-content: flex-end;
+            }
+            .nav-links {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                background: none;
+                padding: 0;
+            }
+            .nav-links a {
+                font-size: 1rem;
+                padding: 0.5rem 1rem;
+            }
+            .hamburger {
+                display: none;
+            }
+            .footer-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+                padding: 2rem 0;
+            }
             .modal-content {
                 width: 600px;
                 max-width: 90vw;
                 padding: 2rem;
+                border-radius: 12px;
             }
-
+            .qr-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
             #qrcode {
                 width: 200px;
                 height: 200px;
             }
-
-            #download-qr, #add-to-calendar, #modal-close {
+            #download-qr,
+            #add-to-calendar,
+            #modal-close {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
                 min-height: 52px;
+            }
+            .btn-primary {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+                transition: background-color 0.3s, transform 0.2s;
+            }
+            .btn-primary:hover {
+                background-color: var(--primary-dark);
+                transform: translateY(-2px);
+            }
+            .btn-secondary {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+            .trust-section {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                font-size: 1rem;
+                padding: 1rem;
+                background: var(--background-light);
+                border-radius: 8px;
+                margin-bottom: 1.5rem;
+            }
+            #distance-info {
+                font-size: 1rem;
             }
         }
 
+        /* General styles (unchanged) */
         .hamburger {
             display: none;
             flex-direction: column;
             gap: 4px;
+            justify-content: center;
+            align-items: center;
             width: 32px;
             height: 32px;
             background: none;
             border: none;
             cursor: pointer;
         }
-
         .hamburger div {
             width: 24px;
             height: 3px;
-            background: var(--text);
+            background: var(--text, #333);
             border-radius: 2px;
             transition: all 0.3s;
         }
-
         .select-container {
             position: relative;
+            width: 100%;
         }
-
         .select-container select {
             appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>') no-repeat right 0.75rem center/16px 16px;
             padding-right: 2.5rem;
+            max-height: 150px;
+            overflow-y: auto;
         }
-
+        .select-container select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        .select-container select.error {
+            border-color: var(--error);
+        }
+        .select-container select.valid {
+            border-color: var(--success);
+        }
         .confetti {
             position: fixed;
             width: 8px;
@@ -368,61 +385,71 @@
             opacity: 0.8;
             animation: fall 2s linear;
         }
-
         @keyframes fall {
             to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
-
         ::selection {
-            background: var(--primary);
+            background: var(--primary, #2563eb);
             color: #fff;
         }
-
-        [data-theme="dark"] {
-            --background-light: #1f2937;
-            --text: #e5e7eb;
-            --text-light: #9ca3af;
-        }
-
         [data-theme="dark"] ::selection {
-            background: #60a5fa;
+            background: var(--primary, #60a5fa);
             color: #000;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <a href="index.html" aria-label="Bagchk Home" class="flex items-center font-extrabold text-xl sm:text-2xl lg:text-3xl">
-                        <span class="text-white dark:text-white">Bag</span><span class="text-blue-500">chk</span>
-                    </a>
-                    <div class="flex items-center gap-3">
-                        <button class="theme-toggle" aria-label="Toggle dark mode">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 5v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                        </button>
-                        <button class="hamburger" aria-label="Toggle navigation menu" role="button">
-                            <div></div><div></div><div></div>
-                        </button>
-                    </div>
-                    <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
-                        <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
-                        <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
-                        <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
-                        <a href="#book" class="btn btn-primary p-2 sm:px-4 rounded">Book Now</a>
-                    </div>
+  <nav>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <a href="index.html" aria-label="Bagchk Home" class="flex items-center font-extrabold text-xl sm:text-2xl lg:text-3xl text-[var(--text)]">
+                <span class="text-white dark:text-white">Bag</span><span class="text-blue-500">chk</span>
+            </a>
+
+            <div class="flex items-center gap-3">
+                <button class="theme-toggle" aria-label="Toggle dark mode">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 3v1m0 5v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </button>
+                <button class="hamburger" aria-label="Toggle navigation menu" role="button">
+                    <div></div><div></div><div></div>
+                </button>
+            </div>
+
+            <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
+                <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
+                <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
+                <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
+                <a href="#book" class="btn btn-primary p-2 sm:px-4 rounded">Book Now</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+ <section id="book" class="booking-section">
+        <div class="booking-container">
+            <div class="carousel-container" role="region" aria-label="Promotional images carousel">
+                <div class="carousel-item active" style=" Easter Egg! You're a curious one, aren't you? 🕵️‍♂️ Here's a fun fact: Chicago's nickname 'The Windy City' isn't just about the weather—it's also a nod to its long-winded politicians! Keep exploring, and maybe you'll find more hidden gems! 😎"></div>
+                <div class="carousel-item" style="background-image: url('/BagChk2.0/images/sports.jpg')"></div>
+                <div class="carousel-item" style="background-image: url('/BagChk2.0/images/mpark.jpg')"></div>
+            </div>
+ 
+            <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
+            <div id="distance-info" class="text-center text-[var(--text-light)] mb-6" aria-live="polite"></div>
+            <div class="trust-section">
+                <svg class="w-6 h-6 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <p>Over 5,000 travelers trust Bagchk! “Super easy and secure!” – John D.</p>
+                <div class="flex gap-1 ml-2">
+                    <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    <span>4.8/5</span>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <section id="book" class="booking-container py-8">
-            <div id="distance-info" class="text-center text-[var(--text-light)] mb-6" aria-live="polite"></div>
-            <h1 class="text-center mb-4">Secure Your Storage in Just a Minute!</h1>
             <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Booking progress">
                 <div class="progress-step active" data-step="personal"><span class="step-number">1</span> Personal Info<div class="tooltip">Enter your contact details</div></div>
                 <div class="progress-step" data-step="storage"><span class="step-number">2</span> Storage Details<div class="tooltip">Choose location and timing</div></div>
@@ -430,7 +457,7 @@
             </div>
             <div class="booking-grid">
                 <div>
-                    <h2 class="font planet-semibold mb-4">Your Booking Details</h2>
+                    <h2 class="font-semibold mb-4">Your Booking Details</h2>
                     <form id="booking-form" novalidate>
                         <div class="form-section active" data-step="personal">
                             <h3 class="font-semibold mb-2">Tell Us About You</h3>
@@ -581,13 +608,13 @@
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <div id="confirmation-modal" class="modal">
         <div class="modal-content">
             <h2 class="font-semibold mb-4">🎉 Booking Confirmed!</h2>
-            <div id="modal-details" class="mb-4" aria-live="polite"></div>
+            <div id="modal-details" class="mb-4"></div>
             <p class="text-[var(--text-light)] mb-4">Show this QR code or a valid ID to drop off and pick up your luggage.</p>
             <div class="qr-container">
                 <div id="qrcode" role="img" aria-label="QR code containing booking details"></div>
@@ -667,8 +694,10 @@
         const validationCache = new Map();
         let isValidating = false;
 
+        // Utility to convert camelCase to kebab-case
         const toKebabCase = str => str.replace(/([A-Z])/g, '-$1').toLowerCase();
 
+        // Validation Rules
         const validationRules = {
             name: {
                 validate: value => {
@@ -725,11 +754,14 @@
             }
         };
 
+    
         // Sanitize Input
         const sanitizeInput = str => str.replace(/[<>"'&]/g, c => ({
-            '<': '<', '>': '>', '"': '"', "'": ''', '&': '&'
+            '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;', '&': '&amp;'
         })[c] || c);
 
+
+        // Validation Function
         const validateStep = (step, force = false) => {
             if (isValidating) return true;
             isValidating = true;
@@ -796,6 +828,7 @@
             }
         };
 
+        // Theme Toggle
         $('.theme-toggle').addEventListener('click', () => {
             const theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
             html.dataset.theme = theme;
@@ -803,6 +836,7 @@
         });
         html.dataset.theme = localStorage.getItem('theme') || 'light';
 
+        // Hamburger Menu
         const toggleMenu = () => {
             const navLinks = $('.nav-links');
             const hamburger = $('.hamburger');
@@ -839,6 +873,20 @@
             }
         }));
 
+        // Carousel
+        const items = $$('.carousel-item');
+        let idx = 0;
+        const rotateCarousel = () => {
+            items[idx].classList.remove('active');
+            items[idx].setAttribute('aria-hidden', 'true');
+            idx = (idx + 1) % items.length;
+            items[idx].classList.add('active');
+            items[idx].setAttribute('aria-hidden', 'false');
+        };
+        setInterval(rotateCarousel, 5000);
+        items.forEach((item, i) => item.setAttribute('aria-hidden', i === 0 ? 'false' : 'true'));
+
+        // Map Setup
         const map = L.map('map', { zoomControl: true, scrollWheelZoom: false, zoom: innerWidth <= 640 ? 10 : 13 })
             .setView([41.8781, -87.6298], innerWidth <= 640 ? 10 : 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -873,6 +921,7 @@
         });
         map.addLayer(markers);
 
+        // Sync Dropdown with Map
         inputs.location.addEventListener('change', () => {
             const selectedLocation = storageLocations.find(loc => loc.name === inputs.location.value);
             if (selectedLocation) {
@@ -892,6 +941,7 @@
             validateStep(currentStep, true);
         });
 
+        // Time Helpers
         const getNextHourInCDT = () => {
             const now = new Date();
             const cdtOffset = -5 * 60 * 60 * 1000;
@@ -905,6 +955,7 @@
             return d.toISOString().slice(0, 16);
         };
 
+        // Progress Indicators
         const updateProgress = () => {
             if (isValidating) return;
             $$('.progress-step').forEach(s => {
@@ -915,6 +966,7 @@
             });
         };
 
+        // Summary & Price
         const updateSummary = () => {
             const s = $('#summary-content');
             const p = $('#price-info');
@@ -939,6 +991,7 @@
             }
         };
 
+        // Form Navigation
         const switchStep = (nextStep) => {
             if (isValidating) return;
             const stepsOrder = ['personal', 'storage', 'preferences'];
@@ -967,7 +1020,7 @@
                 const focusable = $(`.form-section[data-step="${nextStep}"] input, .form-section[data-step="${nextStep}"] select, .form-section[data-step="${nextStep}"] textarea`);
                 if (focusable) focusable.focus();
                 currentStep = nextStep;
-                $('.progress-bar').setAttribute('aria-valuenow', { personal: 1, storage: 2, preferences: 3 }[nextStep]);
+                $('.progress-bar').setAttribute('aria-valu v-now', { personal: 1, storage: 2, preferences: 3 }[nextStep]);
                 updateSummary();
                 updateProgress();
                 validateStep(currentStep, true);
@@ -981,6 +1034,7 @@
             }
         };
 
+        // Form Event Listeners
         form.addEventListener('click', e => {
             const b = e.target;
             if (b.matches('.btn[data-next]') && validateStep(currentStep, true)) {
@@ -990,6 +1044,7 @@
             }
         });
 
+        // Progress Step Click Handler
         $$('.progress-step').forEach(step => {
             step.addEventListener('click', () => {
                 const targetStep = step.dataset.step;
@@ -1004,6 +1059,7 @@
             });
         });
 
+        // Input Handling
         let timeout;
         const debounceValidate = (step) => {
             clearTimeout(timeout);
@@ -1018,6 +1074,7 @@
             });
         });
 
+        // Restore Form Data
         Object.values(inputs).forEach(i => {
             const saved = localStorage.getItem(`bagchk_${i.id}`);
             if (saved !== null) {
@@ -1029,6 +1086,7 @@
             }
         });
 
+        // Geolocation
         $('#find-location').addEventListener('click', () => {
             if (!navigator.geolocation) {
                 alert('Geolocation not supported. Select a location manually.');
@@ -1051,7 +1109,7 @@
                     userMarker = L.marker([lat, lng], {
                         icon: L.divIcon({ 
                             className: 'user-location', 
-                            html: '<div style="background-color: var(--primary); width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--text); box-shadow: 0 0 8px var(--shadow); animation: pulse 1.5s infinite;"></div>', 
+                            html: '<div style="background-color: var(--primary); width: 16px; height: 16px; border-radius: 50%; border: 3px solid var(--text); box-shadow: 0 0 8px var(--shadow); animation: pulse 1.5s infinite;"></div', 
                             iconSize: [22, 22], 
                             iconAnchor: [11, 11] 
                         })
@@ -1107,6 +1165,7 @@
             return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         };
 
+        // Form Submission
         form.addEventListener('submit', e => {
             e.preventDefault();
             const submitBtn = $('#book-now');
@@ -1125,8 +1184,8 @@
                     $('#qrcode').innerHTML = '';
                     new QRCode($('#qrcode'), { 
                         text: JSON.stringify(details), 
-                        width: Math.min(window.innerWidth * 0.8, 200),
-                        height: Math.min(window.innerWidth * 0.8, 200),
+                        width: window.innerWidth <= 640 ? 150 : 200,
+                        height: window.innerWidth <= 640 ? 150 : 200,
                         colorDark: '#000', 
                         colorLight: '#fff', 
                         correctLevel: QRCode.CorrectLevel.H 
@@ -1148,6 +1207,7 @@
             }
         });
 
+        // Modal Actions
         $('#download-qr').addEventListener('click', () => {
             const c = $('#qrcode canvas');
             if (c) {
@@ -1195,6 +1255,7 @@
             }
         };
 
+        // Reset Form
         const resetForm = () => {
             Object.values(inputs).forEach(i => {
                 if (i.type === 'checkbox') {
@@ -1235,6 +1296,7 @@
         };
         $('#reset-form').addEventListener('click', resetForm);
 
+        // Keyboard Navigation
         $$('input, select, button, textarea').forEach(el => el.addEventListener('keydown', e => {
             if (e.key === 'Enter' && el.tagName !== 'BUTTON' && el.tagName !== 'TEXTAREA') {
                 e.preventDefault();
@@ -1253,6 +1315,7 @@
             if (['-', '_'].includes(e.key)) map.zoomOut();
         });
 
+        // Resize Handler
         let resizeT;
         window.addEventListener('resize', () => {
             clearTimeout(resizeT);
@@ -1260,9 +1323,12 @@
                 map.invalidateSize();
                 const z = innerWidth <= 640 ? 10 : 13;
                 if (map.getZoom() !== z) map.setZoom(z);
+                $('.carousel-container').style.minHeight = innerWidth <= 640 ? '120px' : '200px';
+                $$('.carousel-item').forEach(item => item.style.height = innerWidth <= 640 ? '120px' : '200px');
             }, 200);
         });
 
+        // Initialize Form
         const initializeForm = () => {
             inputs.startDate.value = getNextHourInCDT();
             inputs.startDate.min = inputs.startDate.value;
@@ -1304,4 +1370,4 @@
         });
     </script>
 </body>
-</html>
+</html>  
