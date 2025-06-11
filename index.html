@@ -412,7 +412,127 @@
         [data-theme="dark"] .hero-image {
             background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.7)), url('/BagChk2.0/images/background-mobile.jpg');
         }
+/* Slideshow Styles */
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
 
+.slide {
+    display: none;
+    width: 100%;
+    text-align: center;
+}
+
+.slide.active {
+    display: block;
+}
+
+.slide img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.slide-caption {
+    background: var(--card-bg);
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.slide-caption:hover {
+    transform: translateY(-2px);
+}
+
+.prev-btn, .next-btn {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    font-size: 1.5rem;
+    transition: background-color 0.3s;
+}
+
+.prev-btn:hover, .next-btn:hover {
+    background: var(--primary-dark);
+}
+
+.dots-container {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    background-color: var(--text-light);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.dot.active, .dot:hover {
+    background-color: var(--primary);
+}
+
+/* Animation for slides */
+.fade {
+    animation: fadeEffect 0.5s ease-in-out;
+}
+
+@keyframes fadeEffect {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Mobile-specific slideshow styles */
+@media (max-width: 640px) {
+    .slideshow-container {
+        padding: 0 0.75rem;
+    }
+    .slide img {
+        height: 120px;
+    }
+    .slide-caption {
+        padding: 1rem;
+    }
+    .prev-btn, .next-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+    }
+    .dot {
+        height: 10px;
+        width: 10px;
+    }
+}
+
+/* Desktop-specific slideshow styles */
+@media (min-width: 641px) {
+    .slideshow-container {
+        max-width: 1200px;
+    }
+    .slide img {
+        height: 400px;
+    }
+    .slide-caption {
+        padding: 1.5rem;
+    }
+}
     </style>
 <!--     <style>
         :root {
@@ -771,6 +891,63 @@
             <h1 class="font-extrabold mb-4 sm:mb-6">Secure Luggage Storage in Chicago</h1>
             <a href="/BagChk2.0/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
         </div>
+        <!-- Slideshow Section -->
+<section id="slideshow" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">Explore Chicago Events</h2>
+        <div class="slideshow-container relative">
+            <!-- Slides -->
+            <div class="slide fade active" role="group" aria-label="Slide 1 of 5">
+                <img src="/BagChk2.0/images/bulls.jpg" alt="Chicago Bulls game at United Center" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Bulls Game at United Center</h3>
+                    <p class="text-[var(--text-light)]">Experience the electric atmosphere of a Chicago Bulls game at the iconic United Center. Drop your bags with BagChk and cheer without the hassle!</p>
+                </div>
+            </div>
+            <div class="slide fade" role="group" aria-label="Slide 2 of 5">
+                <img src="/BagChk2.0/images/garden.jpg" alt="Chicago Botanic Garden" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Botanic Garden</h3>
+                    <p class="text-[var(--text-light)]">Stroll through the serene landscapes of the Chicago Botanic Garden. Store your luggage with BagChk to explore 385 acres of natural beauty hands-free.</p>
+                </div>
+            </div>
+            <div class="slide fade" role="group" aria-label="Slide 3 of 5">
+                <img src="/BagChk2.0/images/trade.jpg" alt="Tradeshow at McCormick Place" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Tradeshow at McCormick Place</h3>
+                    <p class="text-[var(--text-light)]">Attend a world-class tradeshow at McCormick Place without carrying your bags. BagChk offers secure storage nearby for a seamless experience.</p>
+                </div>
+            </div>
+            <div class="slide fade" role="group" aria-label="Slide 4 of 5">
+                <img src="/BagChk2.0/images/graduation.jpg" alt="Student Graduation Event" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Student Graduations & Events</h3>
+                    <p class="text-[var(--text-light)]">Celebrate graduations and student events in Chicago without the burden of luggage. BagChk keeps your belongings safe while you enjoy the moment.</p>
+                </div>
+            </div>
+            <div class="slide fade" role="group" aria-label="Slide 5 of 5">
+                <img src="/BagChk2.0/images/soldier.jpg" alt="Concert at Soldier Field" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Concerts at Soldier Field</h3>
+                    <p class="text-[var(--text-light)]">Rock out at a concert at Soldier Field. With BagChk, store your bags securely nearby and dance the night away without worry.</p>
+                </div>
+            </div>
+            <!-- Navigation Buttons -->
+            <button class="prev-btn absolute top-1/2 left-0 transform -translate-y-1/2 bg-[var(--primary)] text-white p-2 rounded-r-md hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" aria-label="Previous slide">&#10094;</button>
+            <button class="next-btn absolute top-1/2 right-0 transform -translate-y-1/2 bg-[var(--primary)] text-white p-2 rounded-l-md hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" aria-label="Next slide">&#10095;</button>
+            <!-- Navigation Dots -->
+            <div class="dots-container flex justify-center mt-4">
+                <span class="dot active" aria-label="Go to slide 1" role="button"></span>
+                <span class="dot" aria-label="Go to slide 2" role="button"></span>
+                <span class="dot" aria-label="Go to slide 3" role="button"></span>
+                <span class="dot" aria-label="Go to slide 4" role="button"></span>
+                <span class="dot" aria-label="Go to slide 5" role="button"></span>
+            </div>
+        </div>
+        <div class="text-center mt-6">
+            <a href="/BagChk2.0/booking.html" class="btn-primary px-4 py-2 rounded-md">Book Storage for Your Event</a>
+        </div>
+    </div>
     </section>
 
     <!-- Services Section -->
@@ -906,6 +1083,90 @@
         // Load saved theme
         const savedTheme = localStorage.getItem('theme') || 'dark';
         html.setAttribute('data-theme', savedTheme);
+        // Slideshow functionality
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+let currentSlide = 0;
+let slideInterval;
+
+// Function to show a specific slide
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        slide.setAttribute('aria-hidden', i !== index);
+    });
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+    });
+    currentSlide = index;
+}
+
+// Function to go to the next slide
+function nextSlide() {
+    let next = (currentSlide + 1) % slides.length;
+    showSlide(next);
+}
+
+// Function to go to the previous slide
+function prevSlide() {
+    let prev = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(prev);
+}
+
+// Auto-slide every 5 seconds
+function startSlideshow() {
+    slideInterval = setInterval(nextSlide, 5000);
+}
+
+// Stop auto-sliding
+function stopSlideshow() {
+    clearInterval(slideInterval);
+}
+
+// Event listeners for navigation buttons
+prevBtn.addEventListener('click', () => {
+    stopSlideshow();
+    prevSlide();
+    startSlideshow();
+});
+
+nextBtn.addEventListener('click', () => {
+    stopSlideshow();
+    nextSlide();
+    startSlideshow();
+});
+
+// Event listeners for dots
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        stopSlideshow();
+        showSlide(index);
+        startSlideshow();
+    });
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') {
+        stopSlideshow();
+        prevSlide();
+        startSlideshow();
+    } else if (e.key === 'ArrowRight') {
+        stopSlideshow();
+        nextSlide();
+        startSlideshow();
+    }
+});
+
+// Pause slideshow on hover
+document.querySelector('.slideshow-container').addEventListener('mouseenter', stopSlideshow);
+document.querySelector('.slideshow-container').addEventListener('mouseleave', startSlideshow);
+
+// Initialize slideshow
+showSlide(currentSlide);
+startSlideshow();
     </script>
 </body>
 </html>
