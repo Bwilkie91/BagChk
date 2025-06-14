@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+fix this to include all billing summary details to appear in qr code <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
@@ -1146,45 +1146,25 @@
         };
 
         // QR Code Update
-        // QR Code Update
-const updateQRCode = () => {
-    $('#qrcode').innerHTML = '';
-    const details = Object.fromEntries(
-        Object.entries(inputs).map(([k, i]) => [k, i.type === 'checkbox' ? i.checked : sanitizeInput(i.value)])
-    );
-    // Calculate billing details (reusing logic from updateSummary)
-    const hours = (new Date(inputs.endDate.value) - new Date(inputs.startDate.value)) / 36e5;
-    const bags = parseInt(inputs.bagCount.value, 10) || 0;
-    const rate = inputs.bagType.value === 'oversized' ? 3 : 2;
-    const insuranceCost = inputs.insurance.checked ? bags * 5 : 0;
-    const totalCost = (hours * bags * rate + insuranceCost).toFixed(2);
-    
-    // Add billing details to the QR code data
-    const qrData = {
-        ...details,
-        billing: {
-            totalCost: `$${totalCost}`,
-            insuranceCost: inputs.insurance.checked ? `$${insuranceCost}` : 'None',
-            durationHours: hours.toFixed(2),
-            ratePerHour: `$${rate}/hour`,
-            bags: bags
-        }
-    };
-    
-    try {
-        new QRCode($('#qrcode'), {
-            text: JSON.stringify(qrData, null, 2), // Pretty print for readability
-            width: window.innerWidth <= 640 ? 150 : 200,
-            height: window.innerWidth <= 640 ? 150 : 200,
-            colorDark: html.dataset.theme === 'dark' ? '#ffffff' : '#333333',
-            colorLight: html.dataset.theme === 'dark' ? '#111827' : '#ffffff',
-            correctLevel: QRCode.CorrectLevel.H
-        });
-    } catch (error) {
-        console.error('QR code generation failed:', error);
-        $('#qrcode').innerHTML = '<p>Error generating QR code. Please contact support.</p>';
-    }
-};
+        const updateQRCode = () => {
+            $('#qrcode').innerHTML = '';
+            const details = Object.fromEntries(
+                Object.entries(inputs).map(([k, i]) => [k, i.type === 'checkbox' ? i.checked : sanitizeInput(i.value)])
+            );
+            try {
+                new QRCode($('#qrcode'), {
+                    text: JSON.stringify(details),
+                    width: window.innerWidth <= 640 ? 150 : 200,
+                    height: window.innerWidth <= 640 ? 150 : 200,
+                    colorDark: html.dataset.theme === 'dark' ? '#ffffff' : '#333333',
+                    colorLight: html.dataset.theme === 'dark' ? '#111827' : '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            } catch (error) {
+                console.error('QR code generation failed:', error);
+                $('#qrcode').innerHTML = '<p>Error generating QR code. Please contact support.</p>';
+            }
+        };
 
         // Form Submission
         form.addEventListener('submit', e => {
