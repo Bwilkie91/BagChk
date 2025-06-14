@@ -402,13 +402,13 @@
             background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('images/test;.mobile.jpg');
             background-size: cover;
             background-position: center;
-            min-height: 60vh;
+            min-h-[60vh] sm:min-h-[70vh];
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: #fff;
-        }
+ }
         [data-theme="dark"] .hero-image {
             background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.7)), url('images/test;.mobile.jpg');
         }
@@ -419,6 +419,7 @@
             max-width: 100%;
             margin: 0 auto;
             overflow: hidden;
+            padding: 0 2.5rem; /* Add padding to prevent buttons from touching edges */
         }
 
         .slide {
@@ -453,41 +454,56 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
+            width: 48px; /* Increased for better tap target */
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: var(--primary);
             color: #fff;
             border: none;
+            border-radius: 50%; /* Circular buttons for modern look */
             font-size: 1.5rem;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 2px 4px var(--shadow); /* Subtle shadow for visibility */
+            z-index: 10; /* Ensure buttons are above content */
+        }
+
+        .prev-btn {
+            left: 0.5rem; /* Slight offset from edge */
+        }
+
+        .next-btn {
+            right: 0.5rem; /* Slight offset from edge */
         }
 
         .prev-btn:hover, .next-btn:hover {
             background: var(--primary-dark);
+            transform: translateY(-50%) scale(1.1); /* Slight scale on hover */
         }
 
         .dots-container {
             display: flex;
             justify-content: center;
-            gap: 8px;
-            margin-top: 1rem;
+            gap: 12px; /* Increased spacing for touch */
+            margin-top: 1.5rem; /* More space below slides */
+            padding-bottom: 1rem; /* Prevent clipping on mobile */
         }
 
         .dot {
             cursor: pointer;
-            height: 12px;
-            width: 12px;
+            height: 14px; /* Larger for visibility */
+            width: 14px;
             background-color: var(--text-light);
             border-radius: 50%;
             display: inline-block;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 1px 3px var(--shadow); /* Subtle shadow for depth */
         }
 
         .dot.active, .dot:hover {
             background-color: var(--primary);
+            transform: scale(1.2); /* Slight scale for active/hover */
         }
 
         /* Animation for slides */
@@ -503,7 +519,7 @@
         /* Mobile-specific slideshow styles */
         @media (max-width: 640px) {
             .slideshow-container {
-                padding: 0 0.75rem;
+                padding: 0 1.5rem; /* Reduced padding for smaller screens */
             }
             .slide img {
                 height: 120px;
@@ -512,13 +528,21 @@
                 padding: 1rem;
             }
             .prev-btn, .next-btn {
-                width: 32px;
-                height: 32px;
+                width: 40px; /* Slightly smaller for mobile */
+                height: 40px;
                 font-size: 1.2rem;
+                left: 0.25rem; /* Closer to edge but not touching */
+            }
+            .next-btn {
+                right: 0.25rem;
+            }
+            .dots-container {
+                gap: 10px; /* Adjusted for touch */
+                margin-top: 1rem;
             }
             .dot {
-                height: 10px;
-                width: 10px;
+                height: 12px; /* Slightly smaller but still touch-friendly */
+                width: 12px;
             }
         }
 
@@ -526,174 +550,214 @@
         @media (min-width: 641px) {
             .slideshow-container {
                 max-width: 1200px;
+                padding: 0 3rem; /* More padding for larger screens */
             }
             .slide img {
                 height: 400px;
             }
             .slide-caption {
-                padding: 1.5rem;
+                padding: 1.5rem wife's little sister;
+            }
+            .prev-btn, .next-btn {
+                width: 56px; /* Larger for desktop */
+                height: 56px;
+                font-size: 1.8rem;
+            }
+            .prev-btn {
+                left: 1rem; /* More offset for desktop */
+            }
+            .next-btn {
+                right: 1rem;
+            }
+            .dots-container {
+                gap: 14px; /* More spacing for desktop */
+                margin-top: 2rem;
+            }
+            .dot {
+                height: 16px; /* Larger for better visibility */
+                width: 16px;
+            }
+        }
+
+        /* Extra-large screens */
+        @media (min-width: 1200px) {
+            .slideshow-container {
+                padding: 0 4rem; /* Extra padding for wide screens */
+            }
+            .prev-btn, .next-btn {
+                width: 64px; /* Even larger for XL screens */
+                height: 64px;
+                font-size: 2rem;
+            }
+            .prev-btn {
+                left: 1.5rem;
+            }
+            .next-btn {
+                right: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-  <nav>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style="position: relative">
-        <div class="flex justify-between items-center h-16" style="display: flex; justify-content: space-between; align-items: center;">
-            <a href="index.html" aria-label="Bagchk Home" class="flex items-center font-extrabold text-xl sm:text-2xl lg:text-3xl text-[var(--text)]" style="text-decoration: none;">
-                <span class="text-white dark:text-white">Bag</span><span class="text-blue-500">chk</span>
-            </a>
-            <div class="flex items-center gap-3">
-                <button class="theme-toggle" aria-label="Toggle dark mode">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 3v1m0 5v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </button>
-                <button class="hamburger" aria-label="Toggle navigation menu" role="button">
-                </button>
-            </div>
-            <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
-                <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
-                <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
-                <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
-                <a href="/BagChk/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
+    <nav>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style="position: relative">
+            <div class="flex justify-between items-center h-16" style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="index.html" aria-label="Bagchk Home" class="flex items-center font-extrabold text-xl sm:text-2xl lg:text-3xl text-[var(--text)]" style="text-decoration: none;">
+                    <span class="text-white dark:text-white">Bag</span><span class="text-blue-500">chk</span>
+                </a>
+                <div class="flex items-center gap-3">
+                    <button class="theme-toggle" aria-label="Toggle dark mode">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v1m0 5v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </button>
+                    <button class="hamburger" aria-label="Toggle navigation menu" role="button">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </button>
+                </div>
+                <div class="nav-links flex items-center gap-3 sm:gap-5 lg:gap-6">
+                    <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
+                    <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
+                    <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
+                    <a href="/BagChk/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
+                </div>
             </div>
         </div>
-    </div>
-  </nav>
+    </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero-image min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center text-center text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <br></br>
-
+            <br><br>
             <h1 class="font-extrabold mb-4 sm:mb-6">Secure Luggage Storage in Chicago</h1>
             <a href="/BagChk/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
         </div>
     </section>
 
- <!-- Slideshow Section -->
-<section id="slideshow" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">Explore Chicago Events</h2>
-        <br></br>
-        <div class="slideshow-container relative">
-            <br></br>
-            <!-- Slides -->
-            <div class="slide fade" role="group" aria-label="Slide 1 of 10">
-                <img src="/BagChk/images/Air.jpg" alt="Chicago Air and Water Show" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Air and Water Show</h3>
-                    <p class="text-[var(--text-light)]">Look up! Jets roar over Lake Michigan in this breathtaking summer spectacle. BagChk keeps your hands free for the perfect photo moment.</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">August 15-16, 2025</a></p>
+    <!-- Slideshow Section -->
+    <section id="slideshow" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">Explore Chicago Events</h2>
+            <br><br>
+            <div class="slideshow-container relative">
+                <br><br>
+                <!-- Slides -->
+                <div class="slide fade" role="group" aria-label="Slide 1 of 10">
+                    <img src="/BagChk/images/Air.jpg" alt="Chicago Air and Water Show" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Air and Water Show</h3>
+                        <p class="text-[var(--text-light)]">Look up! Jets roar over Lake Michigan in this breathtaking summer spectacle. BagChk keeps your hands free for the perfect photo moment.</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">August 15-16, 2025</a></p>
+                    </div>
                 </div>
-            </div>
-            <div class="slide fade" role="group" aria-label="Slide 2 of 10">
-                <img src="/BagChk/images/garden.jpg" alt="Chicago Botanic Garden" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Botanic Garden</h3>
-                    <p class="text-[var(--text-light)]">Stroll through the serene landscapes of the Chicago Botanic Garden. Store your luggage with BagChk to explore 385 acres of natural beauty hands-free.</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Open year-round</a></p>
+                <div class="slide fade" role="group" aria-label="Slide 2 of 10">
+                    <img src="/BagChk/images/garden.jpg" alt="Chicago Botanic Garden" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Botanic Garden</h3>
+                        <p class="text-[var(--text-light)]">Stroll through the serene landscapes of the Chicago Botanic Garden. Store your luggage with BagChk to explore 385 acres of natural beauty hands-free.</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Open year-round</a></p>
+                    </div>
                 </div>
-            </div>
-            <div class="slide fade" role="group" aria-label="Slide 3 of 10">
-                <img src="/BagChk/images/trade.jpg" alt="Tradeshow at McCormick Place" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Tradeshow at McCormick Place</h3>
-                    <p class="text-[var(--text-light)]">Attend a world-class tradeshow at McCormick Place without carrying your bags. BagChk offers secure storage nearby for a seamless experience.</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">September 24-26, 2025</a></p>
+                <div class="slide fade" role="group" aria-label="Slide 3 of 10">
+                    <img src="/BagChk/images/trade.jpg" alt="Tradeshow at McCormick Place" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Tradeshow at McCormick Place</h3>
+                        <p class="text-[var(--text-light)]">Attend a world-class tradeshow at McCormick Place without carrying your bags. BagChk offers secure storage nearby for a seamless experience.</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">September 24-26, 2025</a></p>
+                    </div>
                 </div>
-            </div>
-            <div class="slide fade" role="group" aria-label="Slide 4 of 10">
-                <img src="/BagChk/images/graduation.jpg" alt="Student Graduation Event" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Student Graduations & Events</h3>
-                    <p class="text-[var(--text-light)]">Celebrate graduations and student events in Chicago's universities. From May to June, Chicago's schools hold their commencement ceremonies, and BagChk is here to keep your bags safe while you celebrate!</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">May - June 2025 (varies by institution)</a></p>
-                    <ul class="text-[var(--text-light)]">
-                        <li>University of Chicago - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid June</a></li>
-                        <li>Northwestern University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Late May</a></li>
-                        <li>DePaul University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Early June</a></li>
-                        <li>Columbia College Chicago - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid May</a></li>
-                        <li>Chicago State University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid June</a></li>
-                        <li>Roosevelt University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Late May</a></li>
-                    </ul>
+                <div class="slide fade" role="group" aria-label="Slide 4 of 10">
+                    <img src="/BagChk/images/graduation.jpg" alt="Student Graduation Event" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Student Graduations & Events</h3>
+                        <p class="text-[var(--text-light)]">Celebrate graduations and student events in Chicago's universities. From May to June, Chicago's schools hold their commencement ceremonies, and BagChk is here to keep your bags safe while you celebrate!</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">May - June 2025 (varies by institution)</a></p>
+                        <ul class="text-[var(--text-light)]">
+                            <li>University of Chicago - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid June</a></li>
+                            <li>Northwestern University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Late May</a></li>
+                            <li>DePaul University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Early June</a></li>
+                            <li>Columbia College Chicago - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid May</a></li>
+                            <li>Chicago State University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid June</a></li>
+                            <li>Roosevelt University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Late May</a></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="slide fade" role="group" aria-label="Slide 5 of 10">
-                <img src="/BagChk/images/solider.jpg" alt="Concert at Soldier Field" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Concerts at Soldier Field</h3>
-                    <p class="text-[var(--text-light)]">Rock out at a concert at Soldier Field. With BagChk, store your bags securely nearby and dance the night away without worry.</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">June 5-7, 2025</a></p>
+                <div class="slide fade" role="group" aria-label="Slide 5 of 10">
+                    <img src="/BagChk/images/solider.jpg" alt="Concert at Soldier Field" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Concerts at Soldier Field</h3>
+                        <p class="text-[var(--text-light)]">Rock out at a concert at Soldier Field. With BagChk, store your bags securely nearby and dance the night away without worry.</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">June 5-7, 2025</a></p>
+                    </div>
                 </div>
-            </div>
-            <!-- Additional Slides -->
-            <div class="slide fade" role="group" aria-label="Slide 6 of 10">
-                <img src="/BagChk/images/marathon.jpg" alt="Chicago Marathon" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Marathon</h3>
-                    <p class="text-[var(--text-light)]">Join thousands of runners in one of the world’s premier marathons. Store your gear with BagChk and focus on the finish line.</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">October 12, 2025</a></p>
+                <!-- Additional Slides -->
+                <div class="slide fade" role="group" aria-label="Slide 6 of 10">
+                    <img src="/BagChk/images/marathon.jpg" alt="Chicago Marathon" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Marathon</h3>
+                        <p class="text-[var(--text-light)]">Join thousands of runners in one of the world’s premier marathons. Store your gear with BagChk and focus on the finish line.</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">October 12, 2025</a></p>
+                    </div>
                 </div>
-            </div>
-            <div class="slide fade" role="group" aria-label="Slide 7 of 10">
-                <img src="/BagChk/images/blues.jpg" alt="Chicago Blues Festival" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Blues Festival</h3>
-                    <p class="text-[var(--text-light)]">Feel the soul of the city at the world’s largest free blues festival. Let BagChk handle your bags while you groove in Millennium Park.</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">June 11-14, 2025</a></p>
+                <div class="slide fade" role="group" aria-label="Slide 7 of 10">
+                    <img src="/BagChk/images/blues.jpg" alt="Chicago Blues Festival" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Blues Festival</h3>
+                        <p class="text-[var(--text-light)]">Feel the soul of the city at the world’s largest free blues festival. Let BagChk handle your bags while you groove in Millennium Park.</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">June 11-14, 2025</a></p>
+                    </div>
                 </div>
-            </div>
-            <div class="slide fade active" role="group" aria-label="Slide 8 of 10">
-                <img src="/BagChk/images/bulls.jpg" alt="Chicago Bulls game at United Center" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Bulls Game at United Center</h3>
-                    <p class="text-[var(--text-light)]">Experience the electric atmosphere of a Chicago Bulls game at the iconic United Center. Drop your bags with BagChk and cheer without the hassle!</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">October 2025 (Season begins)</a></p>
+                <div class="slide fade active" role="group" aria-label="Slide 8 of 10">
+                    <img src="/BagChk/images/bulls.jpg" alt="Chicago Bulls game at United Center" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Bears Game at United Center</h3>
+                        <p class="text-[var(--text-light)]">Experience the electric atmosphere of a Chicago Bears game at the iconic Soldier Field. Drop your bags with BagChk and cheer without the hassle!</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">October 2025 (Season begins)</a></p>
+                    </div>
                 </div>
-            </div>
-            <div class="slide fade" role="group" aria-label="Slide 9 of 10">
-                <img src="/BagChk/images/lolla.jpg" alt="Lollapalooza in Grant Park" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Lollapalooza in Grant Park</h3>
-                    <p class="text-[var(--text-light)]">Catch your favorite artists at Chicago’s biggest music festival. Skip the baggage blues with BagChk and enjoy the music hands-free.</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">August 1-4, 2025</a></p>
+                <div class="slide fade" role="group" aria-label="Slide 9 of 10">
+                    <img src="/BagChk/images/lolla.jpg" alt="Lollapalooza in Grant Park" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Lollapalooza in Grant Park</h3>
+                        <p class="text-[var(--text-light)]">Catch your favorite artists at Chicago’s biggest music festival. Skip the baggage blues with BagChk and enjoy the music hands-free.</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">August 1-4, 2025</a></p>
+                    </div>
                 </div>
-            </div>
-            <div class="slide fade" role="group" aria-label="Slide 10 of 10">
-                <img src="/BagChk/images/taste.jpg" alt="Taste of Chicago" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
-                <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Taste of Chicago</h3>
-                    <p class="text-[var(--text-light)]">Sample dishes from across the city in one giant food fest. Drop your bags with BagChk and dig in stress-free.</p>
-                    <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">July 9-12, 2025</a></p>
+                <div class="slide fade" role="group" aria-label="Slide 10 of 10">
+                    <img src="/BagChk/images/taste.jpg" alt="Taste of Chicago" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
+                    <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">Taste of Chicago</h3>
+                        <p class="text-[var(--text-light)]">Sample dishes from across the city in one giant food fest. Drop your bags with BagChk and dig in stress-free.</p>
+                        <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">July 9-12, 2025</a></p>
+                    </div>
                 </div>
-            </div>
-            <!-- Navigation Buttons -->
-            <button class="prev-btn absolute top-1/2 left-0 transform -translate-y-1/2 bg-[var(--primary)] text-white p-2 rounded-r-md hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" aria-label="Previous slide">❮</button>
-            <button class="next-btn absolute top-1/2 right-0 transform -translate-y-1/2 bg-[var(--primary)] text-white p-2 rounded-l-md hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" aria-label="Next slide">❯</button>
-            <!-- Navigation Dots -->
-            <div class="dots-container flex justify-center mt-4">
-                <span class="dot active" aria-label="Go to slide 1" role="button"></span>
-                <span class="dot" aria-label="Go to slide 2" role="button"></span>
-                <span class="dot" aria-label="Go to slide 3" role="button"></span>
-                <span class="dot" aria-label="Go to slide 4" role="button"></span>
-                <span class="dot" aria-label="Go to slide 5" role="button"></span>
-                <span class="dot" aria-label="Go to slide 6" role="button"></span>
-                <span class="dot" aria-label="Go to slide 7" role="button"></span>
-                <span class="dot" aria-label="Go to slide 8" role="button"></span>
-                <span class="dot" aria-label="Go to slide 9" role="button"></span>
-                <span class="dot" aria-label="Go to slide 10" role="button"></span>
+                <!-- Navigation Buttons -->
+                <button class="prev-btn absolute top-1/2 left-0 transform -translate-y-1/2 bg-[var(--primary)] text-white p-2 rounded-r-md hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" aria-label="Previous slide">❮</button>
+                <button class="next-btn absolute top-1/2 right-0 transform -translate-y-1/2 bg-[var(--primary)] text-white p-2 rounded-l-md hover:bg-[var(--primary-dark)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]" aria-label="Next slide">❯</button>
+                <!-- Navigation Dots -->
+                <div class="dots-container flex justify-center mt-4">
+                    <span class="dot active" aria-label="Go to slide 1" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 2" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 3" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 4" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 5" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 6" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 7" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 8" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 9" role="button"></span>
+                    <span class="dot" aria-label="Go to slide 10" role="button"></span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <!-- Services Section -->
     <section id="services" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <br></br>
+            <br><br>
             <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">Our Services</h2>
             <p class="text-center mb-6 sm:mb-8 max-w-3xl mx-auto text-[var(--text-light)]">BagChk is a cutting-edge app platform revolutionizing luggage storage in Chicago. We seamlessly connect travelers with vetted local businesses for convenient, safe, and affordable bag storage.</p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -715,9 +779,9 @@
 
     <!-- Why Choose BagChk -->
     <div class="mt-8 sm:mt-12 text-center">
-        <br></br>
+        <br><br>
         <h3 class="text-xl sm:text-2xl font-semibold mb-4">Why Choose BagChk?</h3>
-        <br></br>
+        <br><br>
         <ul class="text-[var(--text-light)] space-y-2 max-w-2xl mx-auto" style="list-style: none; padding: 0;">
             <li>🔒 Partnered with vetted local businesses for secure storage locations</li>
             <li>🧳 Bags stored in secure areas, monitored by staff</li>
@@ -725,14 +789,14 @@
             <li>🖥️ Easy booking through app/website with instant confirmation</li>
             <li>⏰ Flexible storage hours, no size limits, free cancellations</li>
             <li>📷 Camera tracking and human oversight for security</li>
-            <li>📱 24/7 support via app</li>
+            <li>📱 24/7 support via app</ Nations
             <li>💳 Secure cashless payments</li>
             <li>🔒 Lock bags, keep valuables inside, check store ratings</li>
         </ul>
     </div>
 
     <!-- Contact Section -->
-    <br></br>
+    <br><br>
     <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div>
@@ -759,7 +823,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 <div>
                     <h3 class="text-base sm:text-lg font-semibold mb-4">BagChk</h3>
-                    <p class="text-[var(--text-light)]">Secure luggage storage in Chicago. <br>Just Hand It To Us.</br></p>
+                    <p class="text-[var(--text-light)]">Secure luggage storage in Chicago. <br>Just Hand It To Us.</p>
                 </div>
                 <div>
                     <h3 class="text-base sm:text-lg font-semibold mb-3">Quick Links</h3>
