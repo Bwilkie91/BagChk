@@ -183,6 +183,13 @@
                 min-height: 48px;
                 font-size: 0.875rem;
             }
+            .location-search-container {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            .location-search-container input {
+                width: 100%;
+            }
         }
 
         /* Desktop-specific styles */
@@ -332,10 +339,19 @@
             #distance-info {
                 font-size: 1rem;
             }
+            .location-search-container {
+                flex-direction: row;
+                gap: 1rem;
+                max-width: 600px;
+                margin: 0 auto;
+            }
+            .location-search-container input {
+                flex: 1;
+            }
         }
 
         /* General styles */
-        .hamburger {
+      .hamburger {
             display: none;
             flex-direction: column;
             gap: 4px;
@@ -350,7 +366,7 @@
         .hamburger div {
             width: 24px;
             height: 3px;
-            background: var(--text, #333);
+            background: var(--text-dark);
             border-radius: 2px;
             transition: all 0.3s;
         }
@@ -389,12 +405,12 @@
             to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
         ::selection {
-            background: var(--primary, #2563eb);
-            color: #fff;
+            background: var(--primary);
+            color: white;
         }
         [data-theme="dark"] ::selection {
-            background: var(--primary, #60a5fa);
-            color: #000;
+            background: var(--primary);
+            color: black;
         }
             
         /* Hero Section */
@@ -407,17 +423,17 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: #fff;
+            color: white;
         }
         [data-theme="dark"] .hero-image {
-            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.7)), url('images/test;.mobile.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('images/test;.mobile.jpg');
         }
 
-        /* Slideshow Styles */
+        /* Slideshow styles */
         .slideshow-container {
             position: relative;
             max-width: 100%;
-            margin: 0 auto;
+            margin: auto;
             overflow: hidden;
         }
 
@@ -432,7 +448,7 @@
         }
 
         .slide img {
-            max-width: 100%;
+            width: 100%;
             height: auto;
             object-fit: cover;
             border-radius: 8px;
@@ -458,15 +474,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--primary);
-            color: #fff;
+            background-color: var(--primary);
+            color: white;
             border: none;
             font-size: 1.5rem;
             transition: background-color 0.3s;
         }
 
         .prev-btn:hover, .next-btn:hover {
-            background: var(--primary-dark);
+            background-color: var(--primary-dark);
         }
 
         .dots-container {
@@ -534,6 +550,42 @@
                 padding: 1.5rem;
             }
         }
+
+        /* Location search styles */
+        .location-search-container {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .location-search-container input {
+            padding: 0.75rem;
+            font-size: 1rem;
+            border-radius: 6px 0 0 6px;
+            border: 1px solid var(--text-light);
+            border-right: none;
+        }
+
+        .location-search-container button {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border-radius: 0 6px 6px 0;
+            height: 100%;
+        }
+
+        .location-search-container .btn-primary {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-error {
+            color: var(--error, #ef4444);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -557,7 +609,7 @@
                 <a href="index.html#home" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Home</a>
                 <a href="index.html#services" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Services</a>
                 <a href="index.html#contact" class="text-[var(--text)] hover:text-[var(--primary)] p-2 rounded transition">Contact</a>
-                <a href="/BagChk/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
+                <a href="/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
             </div>
         </div>
     </div>
@@ -566,17 +618,33 @@
     <!-- Hero Section -->
     <section id="home" class="hero-image min-h-[60vh] sm:min-h-[70vh] flex items-center justify-center text-center text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <br></br>
-
+            <br></br>
             <h1 class="font-extrabold mb-4 sm:mb-6">Secure Luggage Storage in Chicago</h1>
             <a href="/BagChk/booking.html" class="btn-primary px-3 sm:px-4 py-2 rounded-md">Book Now</a>
-        </div>
+      
     </section>
 
  <!-- Slideshow Section -->
 <section id="slideshow" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-center mb-8 sm:mb-12">Explore Chicago Events</h2>
+              <div class="location-search-container">
+                <input type="text" id="location-search" placeholder="Find a location near me" aria-label="Search for storage locations">
+                <button class="btn-primary" id="search-btn">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    Search
+                </button>
+                <button class="btn-secondary" id="geolocation-btn" aria-label="Use my current location">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                </button>
+            </div>
+            <p class="location-error" id="location-error">Unable to find your location. Please try again or enter a location manually.</p>
+        </div>
         <br></br>
         <div class="slideshow-container relative">
             <br></br>
@@ -592,8 +660,8 @@
             <div class="slide fade" role="group" aria-label="Slide 2 of 10">
                 <img src="/BagChk/images/garden.jpg" alt="Chicago Botanic Garden" class="w-full h-48 sm:h-64 lg:h-96 object-cover rounded-lg mb-4">
                 <div class="slide-caption bg-[var(--card-bg)] p-4 sm:p-6 rounded-lg">
-                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Botanic Garden</h3>
-                    <p class="text-[var(--text-light)]">Stroll through the serene landscapes of the Chicago Botanic Garden. Store your luggage with BagChk to explore 385 acres of natural beauty hands-free.</p>
+                    <h3 class="text-lg sm:text-xl font-semibold mb-2">Chicago Botanical Garden</h3>
+                    <p class="text-[var(--text-light)]">Stroll through the beauty of the Chicago Botanic Garden. Store your luggage with BagChk while you explore 385 acres of natural beauty hands-free.</p>
                     <p class="text-[var(--text-light)] font-semibold">Date: <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Open year-round</a></p>
                 </div>
             </div>
@@ -615,9 +683,9 @@
                         <li>University of Chicago - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid June</a></li>
                         <li>Northwestern University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Late May</a></li>
                         <li>DePaul University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Early June</a></li>
-<!--                         <li>Columbia College Chicago - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid May</a></li>
+                        <li>Columbia College Chicago - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid May</a></li>
                         <li>Chicago State University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Mid June</a></li>
-                        <li>Roosevelt University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Late May</a></li> -->
+                        <li>Roosevelt University - <a href="/BagChk/booking.html" class="text-[var(--primary)] hover:text-[var(--primary-dark)]">Late May</a></li>
                     </ul>
                 </div>
             </div>
@@ -731,6 +799,7 @@
         </ul>
     </div>
 
+
     <!-- Contact Section -->
     <br></br>
     <section id="contact" class="py-12 sm:py-16 lg:py-20 bg-[var(--background)]">
@@ -782,7 +851,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript for Hamburger Menu, Theme Toggle, and Slideshow -->
+    <!-- JavaScript for Hamburger Menu, Theme Toggle, Slideshow, and Location Search -->
     <script>
         // Hamburger Menu and Theme Toggle
         const hamburger = document.querySelector('.hamburger');
@@ -907,6 +976,87 @@
         // Initialize slideshow
         showSlide(currentSlide);
         startSlideshow();
+
+        // Location Search Functionality
+        const searchBtn = document.getElementById('search-btn');
+        const geolocationBtn = document.getElementById('geolocation-btn');
+        const locationSearch = document.getElementById('location-search');
+        const locationError = document.getElementById('location-error');
+
+        // Mock storage locations (replace with actual API data in production)
+        const storageLocations = [
+            { name: "Downtown BagChk", lat: 41.8781, lng: -87.6298, address: "123 N Michigan Ave, Chicago, IL 60601" },
+            { name: "Loop Storage", lat: 41.8819, lng: -87.6321, address: "50 W Washington St, Chicago, IL 60602" },
+            { name: "River North Drop", lat: 41.8925, lng: -87.6341, address: "400 N Clark St, Chicago, IL 60654" }
+        ];
+
+        // Function to calculate distance between two points (Haversine formula)
+        function getDistance(lat1, lng1, lat2, lng2) {
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLng / 2) * Math.sin(dLng / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c; // Distance in km
+        }
+
+        // Function to find nearest locations
+        function findNearestLocations(userLat, userLng) {
+            return storageLocations
+                .map(location => ({
+                    ...location,
+                    distance: getDistance(userLat, userLng, location.lat, location.lng)
+                }))
+                .sort((a, b) => a.distance - b.distance);
+        }
+
+        // Function to display search results (simplified for demo)
+        function displayResults(locations) {
+            alert(`Nearest storage locations:\n${locations.map(l => `${l.name} (${l.address}) - ${l.distance.toFixed(2)} km`).join('\n')}`);
+            // In production, update a map or list element with results
+        }
+
+        // Handle geolocation
+        geolocationBtn.addEventListener('click', () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        locationError.style.display = 'none';
+                        const { latitude, longitude } = position.coords;
+                        const nearestLocations = findNearestLocations(latitude, longitude);
+                        displayResults(nearestLocations);
+                    },
+                    () => {
+                        locationError.style.display = 'block';
+                    }
+                );
+            } else {
+                locationError.style.display = 'block';
+            }
+        });
+
+        // Handle manual search
+        searchBtn.addEventListener('click', () => {
+            const query = locationSearch.value.trim();
+            if (query) {
+                locationError.style.display = 'none';
+                // Mock geocoding (replace with actual geocoding API like OpenStreetMap Nominatim)
+                const mockGeocode = { lat: 41.8781, lng: -87.6298 }; // Chicago center
+                const nearestLocations = findNearestLocations(mockGeocode.lat, mockGeocode.lng);
+                displayResults(nearestLocations);
+            } else {
+                locationError.style.display = 'block';
+            }
+        });
+
+        // Handle enter key for search
+        locationSearch.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
     </script>
 </body>
 </html>
